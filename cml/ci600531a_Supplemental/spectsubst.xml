@@ -1,0 +1,11 @@
+<dictionary 
+  namespace="http://www.blueobelisk.org/dict/spectsubst"
+  prefix="spectsubst"
+  title="dictionary of spectroscopic substances"
+  xmlns="http://www.xml-cml.org/schema/stmml">
+
+   <entry id="nujol" term="Nujol">
+    <definition>A mineral oil</definition>
+  </entry>
+
+</dictionary>

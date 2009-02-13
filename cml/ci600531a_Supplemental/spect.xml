@@ -1,0 +1,22 @@
+<dictionary 
+  namespace="http://www.blueobelisk.org/dict/spect"
+  prefix="spect"
+  title="dictionary of spectroscopic terms"
+  xmlns="http://www.xml-cml.org/schema/stmml">
+
+   <entry id="mull" term="mull">
+    <definition>A suspension</definition>
+  </entry>
+
+  <entry id="IR" term="IR">exactType
+    <definition>Desscribing a simple infrared spectrum</definition>
+  </entry>
+
+  <entry id="exactType" term="exactType">
+    <definition>A closer definition of the spectrum type as in type of spectrum</definition>
+  </entry>
+
+  <entry id="treatment" term="treatment">
+    <definition>Some special treatment which has been applied before measuring</definition>
+  </entry>
+</dictionary>

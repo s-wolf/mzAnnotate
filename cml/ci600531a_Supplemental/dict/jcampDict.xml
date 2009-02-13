@@ -1,0 +1,919 @@
+﻿<dictionary
+  namespace="http://www.xml-cml.org/dict/jcampDict"
+  xmlns="http://www.xml-cml.org/schema"
+  dictionaryPrefix="jcamp"
+  title="JCAMP-DX dictionary"
+  xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+
+  <entry id="DX4plus" term="DX4plus">
+    <annotation>
+	<appinfo>
+   		<html:p xmlns:html="http://www.w3.org/1999/xhtml">
+    		   JCAMP-DX identifiers may not match with XML identifiers.
+    		   When JCAMP-DX LABELS are parsed, alphabetic characters 
+                   are converted to upper case, and all spaces, dashes, slashes, 
+                   and underlines are discarded. (XUNITS, xunits, xUNITS, and X-UNITS 
+                   are all equivalent JCAMP-DX labels.)
+  		   The following transformation rules apply when mapping JCAMP-DX 
+                   identifiers onto identifiers in this dictionary:
+    			<html:ol>
+    			<html:li>Any spaces are removed</html:li>
+    			<html:li>
+    				A '.' character as first characted is replaced
+    				by the technique abbreviation followed by an underscore,
+    				e.g. .SHIFTREFERENCE by NMR_SHIFTREFERENCE
+    			</html:li>
+    			</html:ol>
+    		</html:p>
+    	</appinfo>
+     </annotation>
+    <definition>
+        The JCAMP-DX versions 4.24, 5.0, 5.01 
+    </definition>
+    <description>
+       JCAMP-DX 4.24 for IR was published in 1988, 
+       5.0 for NMR in 1993 and MS in 1994 and 
+       5.01 for NMR in 1999, IMS in 2001 and EMR in 2006
+    </description>
+  </entry>
+	<entry id="JCAMP-CS" term="JCAMP-CS">
+		<definition>3.7 (version number)</definition>
+	</entry>
+	<entry id="JCAMP-DX" term="JCAMP-DX">
+		<definition>4.24, 5.00, 5.01 (version number)</definition>
+	</entry>
+	<entry id="TITLE" term="Title">
+		<definition>description of the spectrum</definition>
+	</entry>
+	<entry id="DATATYPE" term="Data Type">
+		<definition>The data type of the spectrum</definition>
+		<description>
+			Can hold the following values: INFRARED SPECTRUM, RAMAN SPECTRUM,
+			INFRARED PEAK TABLE, INFRARED INTERFEROGRAM, INFRARED TRANSFORMED
+			SPECTRUM, NMR FID, NMR SPECTRUM, NMR PEAK TABLE, NMR PEAK ASSIGNMENTS, 
+                        MASS SPECTRUM, CONTINUOUS MASS SPECTRUM, ION MOBILITY SPECTRUM,
+                        IMS PEAK TABLE, IMS PEAK ASSIGNMENTS, EMR MEASUREMENT, EMR SIMULATION
+		</description>
+	</entry>
+	<entry id="DATACLASS" term="Data Class">
+		<definition></definition>
+		<description>
+			XYDATA, XYPOINTS, PEAK TABLE, ASSIGNMENTS, NTUPLES
+		</description>
+	</entry>
+	<entry id="XUNITS" term="XUnits">
+		<definition>Abscissa units</definition>
+		<description>
+			Specifies the abscissa units for XYDATA, the following
+			entries are allowed: 1/CM, MICROMETERS, NANOMETERS, SECONDS, HZ, M/Z
+			(PPM allowed for assignments and tables but NOT for spectra)
+                        MILLISECONDS, MICROSECONDS, NANOSECONDS,
+			DEGREE, HERTZ, KELVIN, SECOND, TESLA, WATT.
+		</description>
+	</entry>
+	<entry id="YUNITS" term="YUnits">
+		<definition>Ordinate units</definition>
+		<description>
+			Specifies the ordinate units for XYDATA, the following entries are allowed: 
+                        TRANSMITTANCE, REFLECTANCE, ABSORBANCE, KUBELKA-MUNK, COUNTS, 
+                        RELATIVE ABUNBDANCE, MICROAMPERES, NANOAMPERES, PICOAMPERES, ARBITRARY UNITS
+		</description>
+	</entry>
+	<entry id="XFACTOR" term="XFactor">
+		<definition>
+			Factor by which x-components of XYDATA are multiplied to
+			obtain actual values
+		</definition>
+	</entry>
+	<entry id="YFACTOR" term="YFactor">
+		<definition>
+			Factor by which y-components of XYDATA are multiplied to
+			obtain actual values
+		</definition>
+		<description>
+			YFactor is normally chosen to convert Y-values to integers
+			to save space required by decimal points, e.g. if transmittance
+                        is recorded between 0 and 0.9999 use a YFACTOR to give 0 - 9999.
+		</description>
+	</entry>
+	<entry id="FIRSTX" term="FirstX">
+		<definition>First recorded abscissa value (for NMR actual value may be affected by ShiftReference)</definition>
+	</entry>
+	<entry id="LASTX" term="LastX">
+		<definition>Last recorded abscissa value (for NMR actual value may be affected by ShiftReference)</definition>
+	</entry>
+	<entry id="FIRSTY" term="FirstY">
+		<definition>Actual Y-value corresponding to FIRSTX.</definition>
+		<description>
+			FIRSTY should equal YFACTOR times the first Y-value in XYDATA
+		</description>
+	</entry>
+	<entry id="MAXX" term="MaxX">
+		<definition>Largest x value</definition>
+	</entry>
+	<entry id="MINX" term="MinX">
+		<definition>Smallest x value</definition>
+	</entry>
+	<entry id="MAXY" term="MaxY">
+		<definition>Largest y value</definition>
+	</entry>
+	<entry id="MINY" term="MinY">
+		<definition>Smallest y value</definition>
+	</entry>
+	<entry id="DELTAX" term="DeltaX">
+		<definition>The nominal spacing between points</definition>
+		<description>
+			This LDR gives the nominal spacing between points for
+			inspection by the user. Actual X-values are calculated from
+			the spacing by (LASTX-FIRSTX)/(NPOINTS-1))
+		</description>
+	</entry>
+	<entry id="NPOINTS" term="NPoints">
+		<definition>
+			Number of components of XYDATA, XYPOINTS, PEAKTABLE or RADATA
+		</definition>
+	</entry>
+	<entry id="XYDATA" term="XYData">
+		<definition>The actual data is encoded in here</definition>
+		<description>
+			Contains the table of ordinates at equal X-intervals. Will
+			extend over many lines.
+		</description>
+	</entry>
+	<entry id="XYPOINTS" term="XYPoints">
+		<definition>
+                    Contains a table of XY pairs for spectral data which are not spaced 
+                    at constant abscissa increments. (XY..XY)
+                </definition>
+	</entry>
+	<entry id="PEAKASSIGNMENTS" term="Peak Assignments">
+		<definition>
+                     List of peak assignments for components, functional groups, etc.
+                     (XA) or (XYA) or (XYWA) (A = &lt;assignment&gt;)
+                </definition>
+	</entry>
+	<entry id="PEAKTABLE" term="Peak Table">
+		<definition>(XY..XY), (XYW..XYW) or (XYM..XYM) (M = multiplicity)</definition>
+	</entry>
+	<entry id="CLASS" term="Class">
+		<definition>
+			Specifies the Coblentz Class of the spectrum (1,2,3 or 4)
+			and the IUPAC Class of digital representation (A,B,C)
+		</definition>
+	</entry>
+	<entry id="ORIGIN" term="Origin">
+		<definition>
+			Name of organization, address, telephone number, name of
+			individual contributor, etc., as appropriate.
+		</definition>
+	</entry>
+	<entry id="OWNER" term="Owner">
+		<definition>Name of owner of a proprietary spectrum</definition>
+		<description>
+			The organization or person named under ORIGIN is responsible
+			for accuracy of this field. If data is copyrighted, this
+			line should read "COPYRIGHT (C) (year) by (name)".
+		</description>
+	</entry>
+	<entry id="DATE" term="Date">
+		<definition>
+			Date when the spectrum was measured, in the form YY/MM/DD.
+		</definition>
+	</entry>
+	<entry id="TIME" term="Time">
+		<definition>
+			Time when the spectrum was measured, in the form HH/MM/SS.
+		</definition>
+	</entry>
+	<entry id="LONGDATE" term="LongDate">
+		<definition>
+			the long date format is YYYY/MM/DD [HH/MM/SS] [+/-UUUU],
+			where UUUU is time zone difference to GMT.
+		</definition>
+	</entry>
+	<entry id="SOURCEREFERENCE" term="Source Reference">
+		<definition>
+			Adequate identification to locate the original spectrum,
+			ie., name of file containing the spectrum, or library name
+			and serial number of the spectrum.
+		</definition>
+	</entry>
+	<entry id="CROSSREFERENCE" term="Cross Reference">
+		<definition>Reference to additional spectra</definition>
+		<description>
+			Cross reference refer to additional spectra of the same
+			sample, i.e., different thickness, mulling agent,
+			polarization, temperature, time, etc. or serve to link a
+			peak table or interferogram with a spectrum
+		</description>
+	</entry>
+	<entry id="SAMPLEDESCRIPTION" term="Sample Description">
+		<definition>Decription of the sample.</definition>
+		<description>
+			If the sample is not a pure compound, this field should
+			contain its description, i.e, compositon, origin,
+			appearance, result of interpretion, etc. If the sample is a
+			known compund, the following entries should specify
+			structure an properties, as appropriate.
+		</description>
+	</entry>
+	<entry id="CASNAME" term="CAS Name">
+		<definition>The chemical abstracts compliant name.</definition>
+		<description>
+			Name according to Chemical Abstracts naming conventions as
+			described in the 1985 CAS Index Guide. Examples can be found
+			in Chemical Abstracts indices or the Merck Index.
+		</description>
+	</entry>
+	<entry id="NAMES" term="Names">
+		<definition>Common trade or other names.</definition>
+	</entry>
+	<entry id="MOLFORM" term="Mol Form">
+		<definition>Molecular formula.</definition>
+		<description>
+			Element symbols are arranged with carbon first, followed by
+			hydrogen, and the remaining element symbols in alphabetic
+			order.
+		</description>
+	</entry>
+	<entry id="IUPACNAME" term="IUPAC Name">
+		<definition>substance name in IUPAC form</definition>
+	</entry>
+	<entry id="CASREGISTRYNO" term="CAS Registry No">
+		<definition>CAS Registry Number.</definition>
+	</entry>
+	<entry id="WISWESSER" term="Wiswesser">
+		<definition>
+			The Wiswesser line notation is a precise and concise means
+			of expressing structural formulae as character strings.
+		</definition>
+	</entry>
+	<entry id="BEILSTEINLAWSONNO" term="Beilstein Lawson No">
+		<definition>
+			The Beilstein Lawson Number is a structural formula
+			clustering code based on the Beilstein System.
+		</definition>
+		<description>
+			Is used for locating information in Beilstein databases,
+			including STN online database. The code contains only
+			structural information and can be locally generated.
+		</description>
+	</entry>
+	<entry id="BP" term="BP">
+		<definition>Boiling point in degrees C.</definition>
+	</entry>
+	<entry id="MP" term="MP">
+		<definition>melting point in degrees C</definition>
+	</entry>
+	<entry id="PRESSURE" term="Pressure">
+		<definition>
+			Sample pressure in appropriate units if significantly
+			different from atmospheric pressure.
+		</definition>
+	</entry>
+	<entry id="TEMPERATURE" term="Temperature">
+		<definition>
+			Sample temperature in degrees C if significantly different
+			from room temperature.
+		</definition>
+	</entry>
+	<entry id="STATE" term="State">
+		<definition>State of the compound.</definition>
+		<description>
+			Solid, liquid, gas, solution, KBr pellet, powder, nujol
+			mull, etc. in infrared spectroscopy
+		</description>
+	</entry>
+	<entry id="REFRACTIVEINDEX" term="Refractive Index">
+		<definition>
+			In the form: ND = 1542^20 (index at 20 C for NaD line).
+		</definition>
+	</entry>
+	<entry id="DENSITY" term="Density">
+		<definition>Density in g/cm^3.</definition>
+	</entry>
+	<entry id="MW" term="MW">
+		<definition>Molecular weight.</definition>
+	</entry>
+	<entry id="CONCENTRATIONS" term="Concentrations">
+		<definition>
+			List of components and impurities and their concentrations.
+		</definition>
+	</entry>
+	<entry id="SOLVENTNAME" term="Solvent Name">
+		<definition>description of the solvent</definition>
+	</entry>
+	<entry id="SPECTROMETERDATASYSTEM" term="Spectrometer/Data System">
+		<definition>
+			Contains the manufacturers name, model of the spectrometer,
+			software system, and release number, as appropriate, in the
+			form used by the manufacturer.
+		</definition>
+	</entry>
+	<entry id="INSTRUMENTALPARAMETERS" term="Instrumental Parameters">
+		<definition>List of pertinent instrumental settings.</definition>
+	</entry>
+	<entry id="SAMPLINGPROCEDURE" term="Sampling Procedure">
+		<definition>Sampling procedure.</definition>
+		<description>
+			First entry should be MODE of observation (transmission,
+			specular reflection, PAS, matrix isolation, photothermal
+			beam deflection, etc.), followed by appropriate additional
+			information, i.e., name and model of accessories, cell
+			thickness, and window material for fixed liquid cells, ATR
+			plate material...
+		</description>
+	</entry>
+	<entry id="RESOLUTION" term="Resolution">
+		<definition>
+			Nominal resolution in units specified by XUNITS.
+		</definition>
+	</entry>
+	<entry id="PATHLENGTH" term="Path Length">
+		<definition>Pathlength in cm.</definition>
+	</entry>
+	<entry id="DATAPROCESSING" term="Data Processing">
+		<definition>
+			Description of background correction, smoothing,
+			substraction, deconvolution procedures, apodization
+			function, zero-fill, or other data processing.
+		</definition>
+	</entry>
+	<entry id="XLABEL" term="XLabel">
+		<definition>label of the X-axis</definition>
+	</entry>
+	<entry id="YLABEL" term="YLabel">
+		<definition>label of the Y-axis</definition>
+	</entry>
+	<entry id="AUDITTRAIL" term="Audit Trail">
+		<definition>list of audit trail entries in the form:
+               (id no., &lt;longdate &gt;, &lt;who&gt;, &lt;where&gt;, &lt;what&gt; )</definition>
+	</entry>
+	<entry id="COMMENTS" term="Comments">
+		<definition></definition>
+	</entry>
+	<entry id="END" term="END">
+		<definition></definition>
+	</entry>
+<!--
+============ JCAMP-DX BLOCK specific elements and attributes ==============
+-->
+	<entry id="BLOCKS" term="BLOCKS">
+		<definition>number of blocks enclosed in a link block of a compound file</definition>
+	</entry>
+	<entry id="BLOCKID" term="BLOCK ID">
+		<definition>a unique positive integer assigned to each block in a compound file used as a block identifier</definition>
+	</entry>
+<!--
+============ JCAMP-DX NTUPLE specific elements and attributes ==============
+-->
+	<entry id="NTUPLES" term="NTUPLES">
+		<definition>data stored in PAGE format</definition>
+	</entry>
+	<entry id="ENDNTUPLES" term="END NTUPLES">
+		<definition>end of section</definition>
+	</entry>
+	<entry id="PAGE" term="PAGE">
+		<definition>each PAGE holds a spectrum usually with similar xValues.</definition>
+	</entry>
+	<entry id="DATATABLE" term="Data Table">
+		<definition></definition>
+		<description>
+			(X++(R..R)) or (X++(I..I)), XYDATA
+		</description>
+	</entry>
+	<entry id="VARDIM" term="VARDIM">
+		<definition>number of data points of the corresponding axis</definition>
+	</entry>
+	<entry id="VARFORM" term="VARFORM">
+		<definition>data form: AFFN or ASDF</definition>
+	</entry>
+	<entry id="VARNAME" term="VARNAME">
+		<definition>variable name, e.g.: TIME, FID/REAL, FID/IMAG, PAGE NUMBER, MASS, INTENSITY, RETENTION TIME</definition>
+	</entry>
+	<entry id="VARTYPE" term="VARTYPE">
+		<definition>INDEPENDENT DEPENDENT PAGE</definition>
+	</entry>
+	<entry id="FACTOR" term="Factor">
+		<definition>factor to convert scaled values of the corresponding axis to actual values</definition>
+	</entry>
+	<entry id="FIRST" term="First">
+		<definition>first unscaled value of the corresponding axis in the belonging UNITS</definition>
+	</entry>
+	<entry id="LAST" term="Last">
+		<definition>last unscaled value of the corresponding axis in the belonging UNITS</definition>
+	</entry>
+	<entry id="MAX" term="Max">
+		<definition>largest unscaled value of the corresponding axis in the belonging UNITS</definition>
+	</entry>
+	<entry id="MIN" term="Min">
+		<definition>smallest unscaled value of the corresponding axis in the belonging UNITS</definition>
+	</entry>
+	<entry id="SYMBOL" term="Symbol">
+		<definition>symbol to indicate an axis, e.g.: X, Y, R, I, T, N</definition>
+	</entry>
+	<entry id="UNITS" term="Units">
+		<definition>units belonging to the values of the corresponding axis, 
+                     e.g.: SECONDS, ARBITRARY UNITS, M/Z, RELATIVE ABUNDANCE</definition>
+	</entry>
+<!--
+============ EMR elements and attributes ==============
+-->
+	<entry id="EMR_METHOD" term="EMR.Method">
+		<definition>
+                        There are a wide variety of experimental methods used in EMR.
+                </definition>
+		<description>
+			Can hold the following values: ADMR, CIDEP, COSY, CYCLOPS, DECENT, DEER, DEFENCE, 
+                        DONUT, ELDOR, EPR, ESR, ESR-STM, ESE, ESEEM, EXSCY, FDMR, FMR, FORTE, HETEROCOSY,
+                        HFEPR, HYEND, HYSCORE, LEFE, LODESR, LOD-PEPR, LOD-ESEEM, LOMENDOR, MARY, MAS-EPR,
+                        MODR, MQ-EPR, MQ-ELDOR, MQ-ENDOR, NZ-ESEEM, PCDMR, PEANUT, PEDRI, PYESR, RAS-EPR,
+                        RYDMR, SECSY, SEDOR, SEESR, SIFTER, SMART, TREPR, TRFDMR
+		</description>
+	</entry>
+	<entry id="EMR_DETECTIONMODE" term="EMR.Detection Mode">
+		<definition>either continuous wave or one or more pulses are used to perturb the sample</definition>
+                <description>CW or PULSE</description>
+	</entry>
+	<entry id="EMR_DETECTIONMETHOD" term="EMR.Detection Method">
+		<definition>Used where a resonator is not involved in the measurement</definition>
+	</entry>
+	<entry id="EMR_MICROWAVEFREQUENCY1" term="EMR.Microwave Frequency1">
+		<definition>
+                    Typical EMR experiments are conducted at a fixed microwave frequency that ranges from few
+                    MHz to hundreds of GHz. (in Hz)
+                </definition>
+	</entry>
+	<entry id="EMR_MICROWAVEPOWER1" term="EMR.Microwave Power1">
+		<definition>Power of the microwave source (in W)</definition>
+	</entry>
+	<entry id="EMR_MICROWAVEPHASE1" term="EMR.Microwave Phase1">
+		<definition>Phase of the microwave source (in degree)</definition>
+	</entry>
+	<entry id="EMR_MICROWAVEFREQUENCY2" term="EMR.Microwave Frequency2">
+		<definition>
+                    Frequency for the second microwave source. (in Hz required for ELDOR)
+                </definition>
+        </entry>
+	<entry id="EMR_MICROWAVEPOWER2" term="EMR.Microwave Power2">
+		<definition>Power of the second microwave source (in W)</definition>
+	</entry>
+	<entry id="EMR_MICROWAVEPHASE2" term="EMR.Microwave Phase2">
+		<definition>Phase of the second microwave source (in degree)</definition>
+	</entry>
+	<entry id="EMR_MODULATIONUNIT" term="EMR.Modulation Unit">
+		<definition>
+                      In a typical CW EMR experiment, the signal can be modulated by either field or frequency
+                      to achieve the enhancement of the signal resolution.
+                      The source of the modulation is required for CW.
+                </definition>
+	</entry>
+	<entry id="EMR_MODULATIONAMPLITUDE" term="EMR.Modulation Amplitude">
+		<definition>Amplitude of the corresponding modulation unit.</definition>
+	</entry>
+	<entry id="EMR_MODULATIONFREQUENCY" term="EMR.Modulation Frequency">
+		<definition>Frequency of modulation unit (Hz).</definition>
+	</entry>
+	<entry id="EMR_RECEIVERGAIN" term="EMR.Receiver Gain">
+		<definition>Scalar factor (gain) that is applied to the detection signal.</definition>
+	</entry>
+	<entry id="EMR_RECEIVERHARMONIC" term="EMR.Receiver Harmonic">
+		<definition>The typical CW experiment is recorded in 1st harmonic but may be 2nd or 3rd etc.</definition>
+	</entry>
+	<entry id="EMR_DETECTIONPHASE" term="EMR.Detection Phase">
+		<definition>
+                       Phase-sensitive detection is the common technique for EMR experiments
+                       and is often calibrated to 0 degrees relative to the reference arm.
+                </definition>
+	</entry>
+	<entry id="EMR_SCANTIME" term="EMR.Scan Time">
+		<definition>Time required to complete one scan of the spectrum (s).</definition>
+	</entry>
+	<entry id="EMR_NUMBEROFSCANS" term="EMR.Number of Scans">
+		<definition>Total number of scans for a spectrum. (1 if a single scan)</definition>
+	</entry>
+	<entry id="EMR_GONIOMETERANGLE" term="EMR.Goniometer Angle">
+		<definition>Assumes a single circle goniometer (degree).</definition>
+	</entry>
+	<entry id="EMR_STATICFIELD" term="EMR.Static Field">
+		<definition>
+                        A static magnetic field is commonly used when carrying out double resonance
+                        or spin echo experiments (T)
+                </definition>
+	</entry>
+	<entry id="EMR_SCANNEDRFPOWER" term="EMR.Scanned RF Power">
+		<definition>
+                        In a double resonance experiment, say ENDOR, a constant power of RF source 
+                        that was used to scan for nuclear transitions (W).
+                </definition>
+	</entry>
+	<entry id="EMR_PUMPEDRFFREQUENCY1" term="EMR.Pumped RF Frequency1">
+		<definition>
+                        In a double resonance experiment, say ENDOR, frequency of the RF source 
+                        used to scan for nuclear transitions (Hz).
+                </definition>
+	</entry>
+	<entry id="EMR_PUMPEDRFPOWER1" term="EMR.Pumped RF Power1">
+		<definition>
+                        In a double resonance experiment, say ENDOR, power of the RF source
+                        used to scan for nuclear transitions (W).
+                </definition>
+	</entry>
+	<entry id="EMR_PUMPEDRFFREQUENCY_2" term="EMR.Pumped RF Frequency2">
+		<definition>In a triple resonance experiment, frequency of the RF source used for the third source (in Hz).</definition>
+	</entry>
+	<entry id="EMR_PUMPEDRFPOWER_2" term="EMR.Pumped RF Power2">
+		<definition>In a triple resonance experiment, power of the RF source used for the third source.</definition>
+	</entry>
+	<entry id="EMR_GRADIENTTHETA" term="EMR.Gradient Theta">
+		<definition>
+                        For EMR imaging experiments, intensity of the gradient magnetic field along
+                        the theta angle (using spherical coordinates) (T).
+                </definition>
+	</entry>
+	<entry id="EMR_GRADIENTPHI" term="EMR.Gradient Phi">
+		<definition>
+                        For EMR imaging experiments, intensity of the gradient magnetic field along
+                        the phi angle (using spherical coordinates) (T).
+                </definition>
+	</entry>
+	<entry id="EMR_GRADIENTSTRENGTHINTHETA_PHIDIRECTION" term="EMR.Gradient Strength in Theta/Phi Direction">
+		<definition>
+                        For EMR imaging experiments, intensity of the total angular gradient magnetic field 
+                        (using spherical coordinates) (T).
+                </definition>
+	</entry>
+	<entry id="EMR_GRADIENTSTRENGTHX" term="EMR.Gradient StrengthX">
+		<definition>
+                        For EMR imaging experiments, intensity of the gradient magnetic field along the X axis. (T).
+                </definition>
+	</entry>
+	<entry id="EMR_GRADIENTSTRENGTHY" term="EMR.Gradient StrengthY">
+		<definition>
+                        For EMR imaging experiments, intensity of the gradient magnetic field along the Y axis. (T).
+                </definition>
+	</entry>
+	<entry id="EMR_GRADIENTSTRENGTHZ" term="EMR.Gradient StrengthZ">
+		<definition>
+                        For EMR imaging experiments, intensity of the gradient magnetic field along the Z axis. (T).
+                </definition>
+	</entry>
+	<entry id="EMR_SIMULATIONSOURCE" term="EMR.Simulation Source">
+		<definition>Sources or tools used to simulate the spectrum (e.g., QPOW, Bruker, WinEPR, etc.)</definition>
+	</entry>
+	<entry id="EMR_SIMULATIONPARAMETERS" term="EMR.Simulation Parameters">
+		<definition>
+                       Detailed descriptions of the EMR parameters that are needed to reproduce the simulated spectra 
+                       such as microwave frequency, hyperfine coupling constants, rotation angles, static magnetic fields,
+                       scan range, linewidth, etc.
+                </definition>
+	</entry>
+	<entry id="EMR_RESONATOR" term="EMR.Resonator">
+		<definition>the resonator (also known as the cavity) is used to hold the sample</definition>
+	</entry>
+	<entry id="EMR_TIMECONSTANT" term="EMR.Time Constant">
+		<definition>
+                    The time constant is an output filter that utilizes a resistive-capacitive filter
+                    to filter the output of the phase-sensitive detector to improve the signal to noise.
+                </definition>
+	</entry>
+	<entry id="EMR_CALIBRATIONSTANDARD" term="EMR.Calibration Standard">
+		<definition>
+                   The chemical standard used internally or externally to calibrate the g value
+                   of an EMR signal. (e.g.,DPPH or MgO).
+                </definition>
+	</entry>
+	<entry id="EMR_X_OFFSET" term="EMR.X_Offset">
+		<definition>Numerical offset of the global X axis.</definition>
+	</entry>
+	<entry id="EMR_X_OFFSET" term="EMR.X_Offset">
+		<definition>Numerical offset of the global X axis.</definition>
+	</entry>
+<!--
+============ IMS elements and attributes ==============
+-->
+	<entry id="IMS_AVERAGES" term="IMS.Averages">
+		<definition></definition>
+	</entry>
+	<entry id="IMS_CARRIERGAS" term="IMS.Carrier Gas">
+		<definition>description of the carrier gas</definition>
+	</entry>
+	<entry id="IMS_CARRIERGASFLOW" term="IMS.Carrier Gas Flow">
+		<definition>
+			carrier gas flow in the ionization [and in the drift
+			chamber] in L/min
+		</definition>
+	</entry>
+	<entry id="IMS_CARRIERGASMOISTURE" term="IMS.Carrier Gas Moisture">
+		<definition>water concentration in the carrier gas in ppm</definition>
+	</entry>
+	<entry id="IMS_DRIFTCHAMBER" term="IMS.Drift Chamber">
+		<definition>
+			drift chamber geometry: RECT, length, width, height or CYL,
+			length, radius in mm
+		</definition>
+	</entry>
+	<entry id="IMS_DRIFTGAS" term="IMS.Drift Gas">
+		<definition>description of the drift gas (if used)</definition>
+	</entry>
+	<entry id="IMS_DRIFTGASFLOW" term="IMS.Drift Gas Flow">
+		<definition>drift gas flow into the drift chamber in L/min</definition>
+	</entry>
+	<entry id="IMS_ELECTRICFIELD" term="IMS.Electric Field">
+		<definition>electric field in the ionisation and in the drift chamber in V/cm</definition>
+	</entry>
+	<entry id="IMS_IONIZATIONCHAMBER" term="IMS.Ionization Chamber">
+		<definition>
+			ionization chamber geometry: RECT, length, width, height or
+			CYL, length, radius in mm
+		</definition>
+	</entry>
+	<entry id="IMS_IONIZATIONENERGY" term="IMS.Ionization Energy">
+		<definition>ionization energy in eV</definition>
+	</entry>
+	<entry id="IMS_IONIZATIONMODE" term="IMS.Ionization Mode">
+		<description>UV, BR, AL, PD, CD, ESI, LI, LD, SI, or SY</description>
+	</entry>
+	<entry id="IMS_IONIZATIONSOURCE" term="IMS.Ionization Source">
+		<definition>description of the ionization source</definition>
+	</entry>
+	<entry id="IMS_IONPOLARITY" term="IMS.Ion Polarity">
+		<description>POSITIVE or NEGATIVE</description>
+	</entry>
+	<entry id="IMS_PRESSURE" term="IMS.Pressure">
+		<definition>pressure inside the IMS system in kPa</definition>
+	</entry>
+	<entry id="IMS_TEMPERATURE" term="IMS.Temperature">
+		<definition>
+			temperature in the ionization [and in the drift chamber] in
+			degrees C
+		</definition>
+	</entry>
+	<entry id="IMS_REDUCEDMOBILITY" term="IMS.Reduced Mobility">
+		<definition>
+			(K0, A) (K0 in cm^2 V^-1 s^-1), A = &lt;assignment&gt;)
+		</definition>
+	</entry>
+	<entry id="IMS_REPETITIONRATE" term="IMS.Repitition Rate">
+		<definition>time between shutter openings in ms</definition>
+	</entry>
+	<entry id="IMS_SHUTTERGRIDPOTENTIAL" term="IMS.Shutter Grid Potential">
+		<definition>voltage between the wires of the shutter in V</definition>
+	</entry>
+	<entry id="IMS_SHUTTEROPENINGTIME" term="IMS.Shutter Opening Time">
+		<definition>shutter opening time in microsecond</definition>
+	</entry>
+<!--
+============ MS elements and attributes ==============
+-->
+	<entry id="MS_ACCELERATINGVOLTAGE" term="MS.Accelerating Voltage">
+		<definition>Accelerating voltage in V</definition>
+	</entry>
+	<entry id="MS-BASEPEAK" term="MS.Basepeak">
+		<definition>base peak position in XUNITS</definition>
+	</entry>
+	<entry id="MS_BASEPEAKINTENSITY" term="MS.Basepeak Intensity">
+		<definition>base peak intensity in COUNTS or VOLTS, units</definition>
+	</entry>
+	<entry id="MS_MONOISOTOPICMASS" term="MS.Monoisotopic Mass">
+		<definition>mass of the most common isotopic peak in AMU</definition>
+	</entry>
+	<entry id="MS_NOMINALMASS" term="MS.Nominal Mass">
+		<definition>nominal mass of the molecule</definition>
+	</entry>
+	<entry id="MS_RETENTIONTIME" term="MS.Retention Time">
+		<definition>retention time in seconds</definition>
+	</entry>
+	<entry id="MS_RIC" term="MS.RIC">
+		<definition>reconstructed ion current in COUNTS</definition>
+	</entry>
+	<entry id="MS_SCANNUMBER" term="MS.Scan Number">
+		<definition>scan number</definition>
+	</entry>
+	<entry id="MS_SCANRATE" term="MS.Scan Rate">
+		<definition>scan rate in SECONDS/DECADE or MASSES/SECOND, units</definition>
+	</entry>
+	<entry id="MS_SOURCETEMPERATURE" term="MS.Source Temperature">
+		<definition>source temperature in degrees C</definition>
+	</entry>
+	<entry id="MS_SPECTROMETERTYPE" term="MS.Spectrometer Type">
+		<definition>predefined list of spectometer types</definition>
+		<description>
+			Possible Entries: B, EB, BE, Q, TRAP, TOF
+		</description>
+	</entry>
+	<entry id="MS_TOTALIONCURRENT" term="MS.Total Ion Current">
+		<definition>total ion current in VOLTS or COUNTS, units</definition>
+	</entry>
+	<entry id="MS_DETECTOR" term="MS.Detector">
+		<definition>type of detector</definition>
+	</entry>
+	<entry id="MS_INLET" term="MS.Inlet">
+		<description>Possible entries: DIRECT, BATCH, GC, LC, CZE, PB, MOB</description>
+	</entry>
+	<entry id="MS_INLETTEMPERATURE" term="MS.Inlet Temperature">
+		<definition>inlet temperature in degrees C</definition>
+	</entry>
+	<entry id="MS_IONIZATIONENERGY" term="MS.Ionization Energy">
+		<definition>ionization energy in eV</definition>
+	</entry>
+	<entry id="MS_IONIZATIONMODE" term="MS.Ionization Mode">
+		<description>
+			EI+ or EI-, Cl+ or Cl-, FAB+ or FAB-, TSP+ or TSP-, ESI+ or ESI-, APICI+ or APICI-, LD+ or LD-
+		</description>
+	</entry>
+<!--
+============ NMR elements and attributes ==============
+-->
+	<entry id="NMR_ACQUISITIONMODE" term="NMR.Acquisition Mode">
+		<definition></definition>
+		<description>
+			Possible entries: SIMULTANEOUS, SINGLE, SEQUENTIAL
+		</description>
+	</entry>
+	<entry id="MS_ACQUISITIONRANGE" term="NMR.Acquisition Range">
+		<definition>Acquisition range in AMU (first, last)</definition>
+	</entry>
+	<entry id="NMR_ACQUISITIONTIME" term="NMR.Acquisition Time">
+		<definition></definition>
+	</entry>
+	<entry id="NMR_AVERAGES" term="NMR.Averages">
+		<definition></definition>
+	</entry>
+	<entry id="NMR_COUPLINGCONSTANTS" term="NMR.Coupling Constants">
+		<definition>
+			J (A,B) (coupling constant in Hz (Atom no. A, Hetero Atom  no. B))
+		</definition>
+	</entry>
+	<entry id="NMR_DECOUPLER" term="NMR.Decoupler">
+		<definition>
+			table of decoupler frequencies (F, 90) in MHz and decoupler
+			90 degree pulses in microsecond
+		</definition>
+	</entry>
+	<entry id="NMR_DELAY" term="NMR.Delay">
+		<definition>
+			RD, ID (preacquisition delay for real and imaginary values in microsecond)
+		</definition>
+	</entry>
+	<entry id="NMR_DIGITISERRES" term="NMR.Digitiser Res">
+		<definition>digitizer resolution in bits (12, 16 etc.)</definition>
+	</entry>
+	<entry id="NMR_FIELD" term="NMR.Field">
+		<definition>magnetic field strength in Tesla</definition>
+	</entry>
+	<entry id="NMR_FILTERWIDTH" term="NMR.Filter Width">
+		<definition>filter width in Hz, description of filter algorithm</definition>
+	</entry>
+	<entry id="NMR_MASFREQUENCY" term="NMR.MAS Frequency">
+		<definition>magic angle spinning frequency in HZ</definition>
+	</entry>
+	<entry id="NMR_MAXINTENSITY" term="NMR.Max Intensity">
+		<definition>used to represent maximum intensity used for peak picking</definition>
+	</entry>
+	<entry id="NMR_MININTENSITY" term="NMR.Min Intensity">
+		<definition>minimum intensity used for peak picking</definition>
+	</entry>
+	<entry id="NMR_OBSERVE90" term="NMR.Observe90">
+		<definition>90 degree observe pulse time in microsecond</definition>
+	</entry>
+	<entry id="NMR_OBSERVEFREQUENCY" term="NMR.Observe Frequency">
+		<definition>observer frequency in MHz</definition>
+	</entry>
+	<entry id="NMR_OBSERVENUCLEUS" term="NMR.Observe Nucleus">
+		<definition>observed nucleus e.g. ^13C</definition>
+	</entry>
+	<entry id="NMR_PHASE0" term="NMR.Phase0">
+		<definition>0 order phase correction in degrees</definition>
+	</entry>
+	<entry id="NMR_PHASE1" term="NMR.Phase1">
+		<definition>
+			1st order phase correction in degrees per Hz relative to
+			maximum X value
+		</definition>
+	</entry>
+	<entry id="NMR_PULSESEQUENCE" term="NMR.Pulse Sequence">
+		<definition>
+			information concerning pulse squences, pulse delays,
+			relaxation delays, pulse angles, etc
+		</definition>
+	</entry>
+	<entry id="NMR_RELAXATIONTIMES" term="NMR.Relaxation Times">
+		<definition>(XYR) (R = relaxation in seconds)</definition>
+	</entry>
+	<entry id="NMR_SHIFTREFERENCE" term="NMR.Shift Reference">
+		<definition>
+			INTERNAL or EXTERNAL, name of ref. compound, data point
+			number, shift value in ppm
+		</definition>
+	</entry>
+	<entry id="NMR_SOLVENTREFERENCE" term="NMR.Solvent Reference">
+		<definition>solvent lock signal in ppm</definition>
+	</entry>
+	<entry id="NMR_SPINNINGRATE" term="NMR.Spinning Rate">
+		<definition>sample spinning rate in Hz</definition>
+	</entry>
+	<entry id="NMR_ZEROFILL" term="NMR.Zero Fill">
+		<definition>no. of complex zero filling points</definition>
+	</entry>
+	<entry id="AFACTOR" term="AFactor">
+		<definition>
+			factor to convert scaled amplitude values to actual values
+		</definition>
+	</entry>
+<!--
+============ IR/Raman (pre dot formalism) elements and attributes ==============
+-->
+	<entry id="ALIAS" term="Alias">
+		<definition>
+                     A fraction whose denominator is the number of possible aliases for a given sample
+                     and whose numerator is the number of the alias represented by the data.
+                </definition>
+	</entry>
+	<entry id="AFACTOR" term="AFactor">
+		<definition>
+		    should reflect amplifier gain, etc., to allow transmittance to be calculated 
+                    as the ratio of sample to reference intensities.
+                </definition>
+	</entry>
+	<entry id="AUNITS" term="AUnits">
+		<definition>unit of amplitude of interferograms (ARBITRARY UNITS, VOLTS)</definition>
+	</entry>
+	<entry id="FIRSTA" term="FirstA">
+		<definition>first unscaled amplitude value in AUNITS, compare to FIRSTR</definition>
+	</entry>
+	<entry id="MAXA" term="MaxA">
+		<definition>unscaled maximum amplitude of interferogram, in AUNITS</definition>
+	</entry>
+	<entry id="MINA" term="MinA">
+		<definition>unscaled minimum amplitude of interferogram, in AUNITS</definition>
+	</entry>
+	<entry id="DELTAR" term="DeltaR">
+		<definition>optical retardation per data point in RUNITS.
+                       A function of laser frequency and interferometer geometry.
+                </definition>
+	</entry>
+	<entry id="FIRSTR" term="FirstR">
+		<definition>first unscaled optical retardation value of an interferogram, in RUNITS</definition>
+	</entry>
+	<entry id="LASTR" term="LastR">
+		<definition>last unscaled optical retardation value of an interferogram, in RUNITS</definition>
+	</entry>
+	<entry id="RADATA" term="RAData">
+		<definition>
+                   Contains interferogram or transformed spectrum as a table of 
+                   ordinates (A) vs. retardation (R), with equal R spacing.  (R++(A..A))
+                </definition>
+	</entry>
+	<entry id="RFACTOR" term="RFactor">
+		<definition>factor to convert scaled optical retardation values to actual values</definition>
+	</entry>
+	<entry id="RUNITS" term="RUnits">
+		<definition>unit of optical retardation for interferograms (MICROMETERS)</definition>
+	</entry>
+	<entry id="ZPD" term="ZPD">
+		<definition>zero path difference</definition>
+	</entry>
+<!--
+============ JCAMP-CS elements and attributes ==============
+-->
+	<entry id="ATOMLIST" term="Atom List">
+		<definition>AN AS NH (AtomNo., Atomic Symbol, No. of implicit Hydrogen atoms)</definition>
+	</entry>
+	<entry id="BONDLIST" term="Bond List">
+		<definition>AN1 AN2 BT (AtomNo.1, AtomNo. 2, BondType)</definition>
+	</entry>
+	<entry id="CHARGE" term="Charge">
+		<definition>CH AN1 AN2 etc. (Charge, AtomNo. 1, ... AtomNo. I)</definition>
+	</entry>
+	<entry id="MAXRASTER" term="Max Raster">
+		<definition>maximum of absolute value of X or Y coordinates</definition>
+	</entry>
+	<entry id="MAXXYZ" term="Max XYZ">
+		<definition>maximum of the absolute value of either the X, Y or Z coordinates of the atoms</definition>
+	</entry>
+	<entry id="RADICAL" term="Radical">
+		<definition>UE AN1 AN2 ... ANI (no. of Unpaired Electrons, AtomNo. 1 ... AtomNo. I)</definition>
+	</entry>
+	<entry id="STEREOCENTER" term="Stereocenter">
+		<definition>AN SD SG (AtomNo., StereoDescriptor (P or M), StereoGroup)</definition>
+	</entry>
+	<entry id="STEREOMOLECULE" term="Stereomolecule">
+		<definition>YES</definition>
+	</entry>
+	<entry id="STEREOPAIR" term="Stereopair">
+		<definition>AN1 AN2 SD SG (AtomNo. 1, AtomNo. 2, StereoDescriptor (P, M or 0), StereoGroup)</definition>
+	</entry>
+	<entry id="XYRASTER" term="XYRaster">
+		<definition>AN X Y Z (AtomNo., coordinates for graphical representation of the structure)</definition>
+	</entry>
+	<entry id="XYZ" term="XYZ">
+		<definition>AN X Y Z (AtomNo., physically meaningful coordinates)</definition>
+	</entry>
+	<entry id="XYZFACTOR" term="XYZFactor">
+		<definition>factor used to scale the integer atom coordinates into the original Angstrom units</definition>
+	</entry>
+	<entry id="XYZSOURCE" term="XYZSource">
+		<definition>source of the 3D coordinates</definition>
+	</entry>
+</dictionary>

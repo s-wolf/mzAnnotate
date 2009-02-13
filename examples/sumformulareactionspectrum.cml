@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<cml xmlns="http://www.xml-cml.org/schema">
+   <moleculeList title="ions">
+      <molecule id="ion0_C9H7NO" formula="C 9 H 7 N 1 O 1">
+         <name>C9H7NO</name>
+      </molecule>
+      <molecule id="ion1_C8H7N" formula="C 8 H 7 N 1">
+         <name>C8H7N</name>
+      </molecule>
+   </moleculeList>
+   <moleculeList title="Neutral loss list">
+      <molecule id="nl0_CO" formula="C 1 O 1"/>
+         <name>CO</name>
+      </molecule>
+   </moleculeList>
+   <reactionList>
+      <reaction>
+         <reactantList>
+            <reactant>
+               <molecule ref="ion0_C9H7NO"/>
+            </reactant>
+         </reactantList>
+         <productList>
+            <product role="ion">
+               <molecule ref="ion1_C8H7N"/>
+            </product>
+            <product role="neutral_loss">
+               <molecule ref="nl0_CO"/>
+            </product>
+         </productList>
+      </reaction>
+   </reactionList>
+</cml>
