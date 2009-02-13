@@ -1,0 +1,28 @@
+  <spectrum id="nmrshiftdb20087885" moleculeRef="nmrshiftdb20039678" type="NMR" xmlns:macie="http://www.xml-cml.org/dict/macie" xmlns:siUnits="http://www.xml-cml.org/units/siUnits" xmlns:nmr="http://www.nmrshiftdb.org/dict" xmlns:subst="http://www.xml-cml.org/dict/substDict" xmlns:cmlDict="http://www.xml-cml.org/dict/cmlDict" xmlns:cml="http://www.xml-cml.org/dict/cml" xmlns:units="http://www.xml-cml.org/units/units">
+    <conditionList>
+      <scalar dataType="xsd:string" dictRef="cml:field" units="siUnits:hertz">Unreported</scalar>
+      <scalar dataType="xsd:string" dictRef="cml:temp" units="siUnits:k">Unreported</scalar>
+    </conditionList>
+    <metadataList>
+      <metadata name="nmr:assignmentMethod" content="Unreported"/>
+      <metadata name="nmr:OBSERVENUCLEUS" content="13C"/>
+    </metadataList>
+    <substanceList>
+      <substance role="subst:solvent" title="Unreported"/>
+    </substanceList>
+    <peakList>
+      <peak xValue="91.054"  xUnits="units:mz" id="p0"  atomRefs="a2"/>
+      <peak xValue="119.051" xUnits="units:mz" id="p1"  atomRefs="a4"/>
+      <peak xValue="123.044" xUnits="units:mz" id="p2"  atomRefs="a1"/>
+      <peak xValue="147.044" xUnits="units:mz" id="p3"  atomRefs="a3"/>
+      <peak xValue="148.048" xUnits="units:mz" id="p4"  atomRefs="a5"/>
+      <peak xValue="151.039" xUnits="units:mz" id="p5"  atomRefs="a6"/>
+      <peak xValue="153.018" xUnits="units:mz" id="p6"  atomRefs="a7"/>
+      <peak xValue="154.023" xUnits="units:mz" id="p7"  atomRefs="a2"/>
+      <peak xValue="179.036" xUnits="units:mz" id="p8"  atomRefs="a4"/>
+      <peak xValue="189.058" xUnits="units:mz" id="p9"  atomRefs="a1"/>
+      <peak xValue="255.067" xUnits="units:mz" id="p10" atomRefs="a3"/>
+      <peak xValue="273.076" xUnits="units:mz" id="p11" atomRefs="a5"/>
+      <peak xValue="274.081" xUnits="units:mz" id="p12" atomRefs="a6"/>
+    </peakList>
+  </spectrum>
