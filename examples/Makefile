@@ -1,12 +1,20 @@
 CMLSPECT=../cml/ci600531a_Supplemental/schema.xsd
+SCHEMATRON=mzAnnot.schematron 
 
-all: validate
+EXAMPLES=sumformulareactionspectrum.cml reactionSchemeMoleculeSet.cml
+
+all: lint validate
 
 clean:
 	@rm *~
 
-validate: 
-	@echo "Validating against schema..."
-	@xmllint --noout --schema ${CMLSPECT} sumformulareactionspectrum.cml
-	@echo "Validating against schematron..."
-	@xmllint --noout --schematron mzAnnot.schematron sumformulareactionspectrum.cml
+lint: $(EXAMPLES:%.cml=%.lint)
+validate: $(EXAMPLES:%.cml=%.linttron)
+
+%.lint: %.cml
+	@echo -n "Lint'ing against schema..."
+	@xmllint --noout --schema ${CMLSPECT} $<
+
+%.linttron: %.cml
+	@echo -n "Validating against schematron..."
+	@xmllint --noout --schematron ${SCHEMATRON} $<
