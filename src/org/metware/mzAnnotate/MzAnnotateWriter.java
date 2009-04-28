@@ -14,6 +14,8 @@ import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.io.MDLReader;
 import org.openscience.cdk.libio.cml.Convertor;
 import org.openscience.cdk.tools.manipulator.ChemFileManipulator;
+import org.xmlcml.cml.base.CMLElement;
+import org.xmlcml.cml.element.CMLCml;
 import org.xmlcml.cml.element.CMLList;
 import org.xmlcml.cml.element.CMLProduct;
 import org.xmlcml.cml.element.CMLProductList;
@@ -29,7 +31,10 @@ public class MzAnnotateWriter {
 	    
    
     public static void main(String[] args) throws FileNotFoundException, CDKException {
-		  WrapperSpectrum spectrum = new WrapperSpectrum("examples/naringenin/PB000122.txt");
+		  
+    	  CMLCml rootXML = new CMLCml();
+    	
+    	  WrapperSpectrum spectrum = new WrapperSpectrum("examples/naringenin/PB000122.txt");
 		  CMLSpect test = new CMLSpect();
 		  
 		  //write spectrum first
@@ -91,8 +96,10 @@ public class MzAnnotateWriter {
 	       
 	      cml.appendChild(reactionList);
 	      
+	      //add to root element
+	      rootXML.appendChild(cml);
 
-	      System.out.println(cml.toXML());
+	      System.out.println(rootXML.toXML());
     }
     
 }
