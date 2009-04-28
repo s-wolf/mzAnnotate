@@ -1,5 +1,8 @@
 package de.ipbhalle.metfrag.tools;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Vector;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -10,6 +13,7 @@ import de.ipbhalle.metfrag.massbankParser.*;
 
 
 
+// TODO: Auto-generated Javadoc
 /**
  * Wrapper for Massbank parser.
  */
@@ -26,6 +30,7 @@ public class WrapperSpectrum {
 	private String nameTrivial;
 	private String filename;
 	private String formula;
+	private HashMap<Double, List<Candidate>> assignedPeakToStructure = null;
 	
 	
 	/**
@@ -46,6 +51,7 @@ public class WrapperSpectrum {
 		String[] fileTemp = filename.split("\\/");
 		this.filename = fileTemp[fileTemp.length - 1];
 		this.setFormula(spectra.get(0).getFormula());
+		this.assignedPeakToStructure = new HashMap<Double, List<Candidate>>();
 	}
 	
 	
@@ -70,6 +76,7 @@ public class WrapperSpectrum {
 		this.KEGG = spectra.get(0).getKEGG();
 		this.nameTrivial = spectra.get(0).getTrivialName();
 		this.setFormula(spectra.get(0).getFormula());
+		this.assignedPeakToStructure = new HashMap<Double, List<Candidate>>();
 	}
 	
 	
@@ -107,6 +114,41 @@ public class WrapperSpectrum {
 				parsedPeaks.add(new Peak(Double.parseDouble(array[0]), Double.parseDouble(array[1]), Double.parseDouble(array[2]), collisionEnergy));
 		}
 		return parsedPeaks;
+	}
+	
+	
+	private void prepareAssignedPeaksToStructure()
+	{
+		for (int i = 0; i < peaks.size(); i++) {
+			if(this.assignedPeakToStructure.containsKey(peaks.get(i).getMass()))
+				continue;
+			else
+				this.assignedPeakToStructure.put(peaks.get(i).getMass(), new ArrayList<Candidate>());
+		}
+	}
+	
+	/**
+	 * Gets the assigned fragments to the specified peak mass.
+	 * 
+	 * @param exactMass the exact mass
+	 * 
+	 * @return the assigned frags
+	 */
+	public List<Candidate> getAssignedFrags(double exactMass)
+	{
+		return this.assignedPeakToStructure.get(exactMass);
+	}
+	
+	
+	/**
+	 * Assign peak to a structure.
+	 * 
+	 * @param peak the peak
+	 * @param candidateStructure the candidate structure
+	 */
+	public void assignPeak(Peak peak, List<Candidate> candidateStructure)
+	{
+		this.assignedPeakToStructure.put(peak.getMass(), candidateStructure);
 	}
 	
 	
@@ -266,6 +308,28 @@ public class WrapperSpectrum {
 	 */
 	public String getFormula() {
 		return formula;
+	}
+
+
+	/**
+	 * Sets the assigned peak to structure.
+	 * 
+	 * @param assignedPeakToStructure the assigned peak to structure
+	 */
+	public void setAssignedPeakToStructure(HashMap<Double, List<Candidate>> assignedPeakToStructure) {
+		this.assignedPeakToStructure = assignedPeakToStructure;
+	}
+
+
+	/**
+	 * Gets the assigned peak to structure.
+	 * 
+	 * @return the assigned peak to structure
+	 */
+	public HashMap<Double, List<Candidate>> getAssignedPeakToStructure() {
+		//prepare datastructure because it has to contain all peaks
+		prepareAssignedPeaksToStructure();
+		return assignedPeakToStructure;
 	}
 	
 }

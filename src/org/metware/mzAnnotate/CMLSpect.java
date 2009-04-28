@@ -1,18 +1,22 @@
 package org.metware.mzAnnotate;
 
+import java.util.HashMap;
 import java.util.List;
 
+import org.openscience.cdk.tools.manipulator.MolecularFormulaManipulator;
 import org.xmlcml.cml.base.CMLAttribute;
 import org.xmlcml.cml.element.CMLConditionList;
 import org.xmlcml.cml.element.CMLList;
 import org.xmlcml.cml.element.CMLMetadata;
 import org.xmlcml.cml.element.CMLMetadataList;
+import org.xmlcml.cml.element.CMLMolecule;
 import org.xmlcml.cml.element.CMLPeak;
 import org.xmlcml.cml.element.CMLPeakList;
 import org.xmlcml.cml.element.CMLScalar;
 import org.xmlcml.cml.element.CMLSpectrum;
 
 import de.ipbhalle.metfrag.massbankParser.Peak;
+import de.ipbhalle.metfrag.tools.Candidate;
 import de.ipbhalle.metfrag.tools.WrapperSpectrum;
 
 public class CMLSpect {
@@ -108,14 +112,23 @@ public class CMLSpect {
 	    	cmlPeak.setXUnits("units:mz");
 	    	cmlPeak.setYValue(peak.getRelIntensity());
 	    	cmlPeak.setYUnits("units:cps");
-	    	cmlPeak.setId("p" + count.toString());
+	    	cmlPeak.setId("peak" + count.toString());
 	    	
 	    	//TODO: add molecule refs
-//	    	CMLPeakStructure peakStructure=new CMLPeakStructure();
-//	    	peakStructure.add
+	    	List<Candidate> structures = spectrumMassbank.getAssignedFrags(peak.getMass());
+	    	if(structures != null)
+	    	{
+		    	for (Candidate candidate : structures) {
+		    		CMLMolecule assignedMols = new CMLMolecule();
+		    		//set ref
+		    		assignedMols.setRef(candidate.getId());
+		    		//set molecular formula
+		    		assignedMols.setFormula(MolecularFormulaManipulator.getString(candidate.getMolecularFormula()));
+		    		cmlPeak.addMolecule(assignedMols);
+				}
+	    	}
 	    	
 	    	peaklist.addPeak(cmlPeak);
-	    	
 	    	count++;
 		}
 	    
