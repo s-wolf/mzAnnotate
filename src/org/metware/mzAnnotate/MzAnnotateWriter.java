@@ -156,14 +156,6 @@ public class MzAnnotateWriter {
 		candidateStructuresP2.add(new Candidate("p3", exactMass, molecularFormulaP2, mols.get(3)));
 		
 		
-		List<Candidate> candidateStructuresOrig = new ArrayList<Candidate>();
-		IMolecularFormula molecularFormulaOrig = new MolecularFormula();
-		molecularFormulaOrig = MolecularFormulaManipulator.getMolecularFormula(mols.get(0), molecularFormulaOrig);
-		exactMass = MolecularFormulaManipulator.getNaturalExactMass(molecularFormulaOrig);
-		//original naringenin
-		candidateStructuresOrig.add(new Candidate("p4", exactMass, molecularFormulaOrig, mols.get(0)));
-		
-		
 		WrapperSpectrum spectrum = new WrapperSpectrum("examples/naringenin/PB000122.txt");
 		Vector<Peak> peaks = spectrum.getPeakList();
 		//peak: 147
