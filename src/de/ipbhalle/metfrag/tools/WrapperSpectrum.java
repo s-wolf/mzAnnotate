@@ -31,6 +31,7 @@ public class WrapperSpectrum {
 	private String filename;
 	private String formula;
 	private HashMap<Double, List<Candidate>> assignedPeakToStructure = null;
+	private String MassBankAccession = "";
 	
 	
 	/**
@@ -50,6 +51,26 @@ public class WrapperSpectrum {
 		this.nameTrivial = spectra.get(0).getTrivialName();
 		String[] fileTemp = filename.split("\\/");
 		this.filename = fileTemp[fileTemp.length - 1];
+		this.setFormula(spectra.get(0).getFormula());
+		this.assignedPeakToStructure = new HashMap<Double, List<Candidate>>();
+	}
+	
+	
+	public WrapperSpectrum(Spectrum spectrum, String MassBankAccession)
+	{
+		Vector<Spectrum> vec = new Vector<Spectrum>();
+		vec.add(spectrum);
+		this.spectra = vec;
+		this.peaks = spectra.get(0).getPeaks(); //just one spectra for now
+		this.exactMass = spectra.get(0).getExactMass();
+		this.mode = spectra.get(0).getMode();
+		this.collisionEnergy = spectra.get(0).getCollisionEnergy();
+		this.InchI = spectra.get(0).getInchi();
+		this.CID = spectra.get(0).getCID();
+		this.KEGG = spectra.get(0).getKEGG();
+		this.nameTrivial = spectra.get(0).getTrivialName();
+		this.MassBankAccession = MassBankAccession;
+		this.filename = "";
 		this.setFormula(spectra.get(0).getFormula());
 		this.assignedPeakToStructure = new HashMap<Double, List<Candidate>>();
 	}
@@ -330,6 +351,16 @@ public class WrapperSpectrum {
 		//prepare datastructure because it has to contain all peaks
 		prepareAssignedPeaksToStructure();
 		return assignedPeakToStructure;
+	}
+
+
+	public void setMassBankAccession(String massBankAccession) {
+		MassBankAccession = massBankAccession;
+	}
+
+
+	public String getMassBankAccession() {
+		return MassBankAccession;
 	}
 	
 }
