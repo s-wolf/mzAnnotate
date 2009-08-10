@@ -16,10 +16,12 @@ import org.xmlcml.cml.element.CMLScalar;
 import org.xmlcml.cml.element.CMLSpectrum;
 
 import de.ipbhalle.metfrag.massbankParser.Peak;
+import de.ipbhalle.metfrag.massbankParser.Spectrum;
 import de.ipbhalle.metfrag.tools.Candidate;
 import de.ipbhalle.metfrag.tools.WrapperSpectrum;
 
 public class CMLSpect {
+	
 	
 	/**
 	   *  Gets this spectrum as cmlSpect.
@@ -99,8 +101,7 @@ public class CMLSpect {
 	    
 	    spectrum.addPeakList(peaklist);
 	    
-
-	    spectrum.setId("massbank:" + spectrumMassbank.getFilename());
+	    spectrum.setId("massbank:" + spectrumMassbank.getMassBankAccession());
 	    spectrum.setMoleculeRef("PubChem:" + spectrumMassbank.getCID());
 	    spectrum.setType("MS2");
 	    List<Peak> peaks = spectrumMassbank.getPeakList();
