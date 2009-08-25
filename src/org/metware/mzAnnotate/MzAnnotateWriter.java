@@ -38,19 +38,19 @@ public class MzAnnotateWriter {
 	/**
 	 * Gets the mzAnnotate.
 	 * 
-	 * @param spectrum the spectrum
+	 * @param data the spectrum
 	 * @param originalMolecule the original molecule
 	 * 
 	 * @return the cML cml
 	 */
-	public CMLCml GetMzAnnotate(MzAnnotate spectrum, IAtomContainer originalMolecule)
+	public CMLCml GetMzAnnotate(MzAnnotate data, IAtomContainer originalMolecule)
 	{
 		//get header
 		CMLCml rootCML = getHeader();
 		
 		CMLSpect test = new CMLSpect();
 		// write spectrum first
-		CMLList cml = test.getCmlSpect(spectrum);
+		CMLList cml = test.getCmlSpect(data);
 		
 		Convertor convertor = new Convertor(true, "cml");
 		CMLMolecule originalMol = convertor.cdkAtomContainerToCMLMolecule(originalMolecule);
@@ -64,7 +64,7 @@ public class MzAnnotateWriter {
 		reactant.addMolecule(originalMol);
 		reactantList.addReactant(reactant);
 		
-		HashMap<Double, List<Candidate>> assignedStructures = spectrum.getAssignedPeakToStructure();
+		HashMap<Double, List<Candidate>> assignedStructures = data.getAssignedPeakToStructure();
 		
 		CMLProductList productList = new CMLProductList();
 		reaction.addProductList(productList);

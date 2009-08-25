@@ -55,7 +55,11 @@ public class MzAnnotate {
 		this.assignedPeakToStructure = new HashMap<Double, List<Candidate>>();
 	}
 	
-	
+	/**
+	 * Reads in a MassBank flat file from a given location.
+	 * 
+	 * @param filename the filename
+	 */
 	public MzAnnotate(Spectrum spectrum, String MassBankAccession)
 	{
 		Vector<Spectrum> vec = new Vector<Spectrum>();
@@ -354,11 +358,21 @@ public class MzAnnotate {
 	}
 
 
+	/**
+	 * Sets the mass bank accession.
+	 * 
+	 * @param massBankAccession the new mass bank accession
+	 */
 	public void setMassBankAccession(String massBankAccession) {
 		MassBankAccession = massBankAccession;
 	}
 
 
+	/**
+	 * Gets the mass bank accession.
+	 * 
+	 * @return the mass bank accession
+	 */
 	public String getMassBankAccession() {
 		return MassBankAccession;
 	}
