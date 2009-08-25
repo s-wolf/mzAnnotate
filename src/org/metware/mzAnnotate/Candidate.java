@@ -1,4 +1,4 @@
-package de.ipbhalle.metfrag.tools;
+package org.metware.mzAnnotate;
 
 import org.openscience.cdk.interfaces.IMolecularFormula;
 import org.openscience.cdk.interfaces.IAtomContainer;;
@@ -25,6 +25,11 @@ public class Candidate {
 		setId(id);
 	}
 
+	/**
+	 * Sets the exact mass.
+	 * 
+	 * @param exactMass the new exact mass
+	 */
 	private void setExactMass(double exactMass) {
 		this.exactMass = exactMass;
 	}
@@ -38,6 +43,11 @@ public class Candidate {
 		return exactMass;
 	}
 
+	/**
+	 * Sets the molecular formula.
+	 * 
+	 * @param molecularFormula the new molecular formula
+	 */
 	private void setMolecularFormula(IMolecularFormula molecularFormula) {
 		this.molecularFormula = molecularFormula;
 	}
@@ -51,6 +61,11 @@ public class Candidate {
 		return molecularFormula;
 	}
 
+	/**
+	 * Sets the molecule.
+	 * 
+	 * @param molecule the new molecule
+	 */
 	private void setMolecule(IAtomContainer molecule) {
 		this.molecule = molecule;
 	}
@@ -65,6 +80,11 @@ public class Candidate {
 	}
 
 
+	/**
+	 * Sets the id.
+	 * 
+	 * @param id the new id
+	 */
 	private void setId(String id) {
 		this.id = id;
 	}

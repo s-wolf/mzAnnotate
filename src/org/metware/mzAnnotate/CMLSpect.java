@@ -17,8 +17,6 @@ import org.xmlcml.cml.element.CMLSpectrum;
 
 import de.ipbhalle.metfrag.massbankParser.Peak;
 import de.ipbhalle.metfrag.massbankParser.Spectrum;
-import de.ipbhalle.metfrag.tools.Candidate;
-import de.ipbhalle.metfrag.tools.WrapperSpectrum;
 
 public class CMLSpect {
 	
@@ -31,7 +29,7 @@ public class CMLSpect {
 	   * @exception  Exception     Database problems
 	   * @exception  CMLException  xml problems.
 	   */
-	  public CMLList getCmlSpect(WrapperSpectrum spectrumMassbank) {
+	  public CMLList getCmlSpect(MzAnnotate spectrumMassbank) {
 	    CMLList cml = new CMLList();
 	    cml.addNamespaceDeclaration("", "http://www.xml-cml.org/schema");
 	    CMLAttribute attribute = new CMLAttribute("dictRef");

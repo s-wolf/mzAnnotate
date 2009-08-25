@@ -1,4 +1,4 @@
-package de.ipbhalle.metfrag.tools;
+package org.metware.mzAnnotate;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -17,7 +17,7 @@ import de.ipbhalle.metfrag.massbankParser.*;
 /**
  * Wrapper for Massbank parser.
  */
-public class WrapperSpectrum {
+public class MzAnnotate {
 	
 	private Vector<Spectrum> spectra;
 	private Vector<Peak> peaks;
@@ -39,7 +39,7 @@ public class WrapperSpectrum {
 	 * 
 	 * @param filename the filename
 	 */
-	public WrapperSpectrum(String filename){
+	public MzAnnotate(String filename){
 		this.spectra = MassbankParser.Read(filename);
 		this.peaks = spectra.get(0).getPeaks(); //just one spectra for now
 		this.exactMass = spectra.get(0).getExactMass();
@@ -56,7 +56,7 @@ public class WrapperSpectrum {
 	}
 	
 	
-	public WrapperSpectrum(Spectrum spectrum, String MassBankAccession)
+	public MzAnnotate(Spectrum spectrum, String MassBankAccession)
 	{
 		Vector<Spectrum> vec = new Vector<Spectrum>();
 		vec.add(spectrum);
@@ -84,7 +84,7 @@ public class WrapperSpectrum {
 	 * @param mode the mode
 	 * @param exactMass the exact mass
 	 */
-	public WrapperSpectrum(String peakString, int mode, double exactMass){
+	public MzAnnotate(String peakString, int mode, double exactMass){
 		this.spectra = new Vector<Spectrum>();
 		this.collisionEnergy = -1;
 		spectra.add(new Spectrum(-1, parsePeaks(peakString), exactMass, mode, "none", -1, "none", "none",""));

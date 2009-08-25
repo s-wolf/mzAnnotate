@@ -20,6 +20,7 @@ import org.openscience.cdk.io.MDLReader;
 import org.openscience.cdk.libio.cml.Convertor;
 import org.openscience.cdk.tools.manipulator.ChemFileManipulator;
 import org.openscience.cdk.tools.manipulator.MolecularFormulaManipulator;
+import org.xmlcml.cml.base.CMLAttribute;
 import org.xmlcml.cml.element.CMLCml;
 import org.xmlcml.cml.element.CMLList;
 import org.xmlcml.cml.element.CMLMolecule;
@@ -31,8 +32,6 @@ import org.xmlcml.cml.element.CMLReaction;
 import org.xmlcml.cml.element.CMLReactionList;
 
 import de.ipbhalle.metfrag.massbankParser.Peak;
-import de.ipbhalle.metfrag.tools.Candidate;
-import de.ipbhalle.metfrag.tools.WrapperSpectrum;
 
 public class MzAnnotateWriter {
 	
@@ -44,10 +43,10 @@ public class MzAnnotateWriter {
 	 * 
 	 * @return the cML cml
 	 */
-	public CMLCml GetMzAnnotate(WrapperSpectrum spectrum, IAtomContainer originalMolecule)
+	public CMLCml GetMzAnnotate(MzAnnotate spectrum, IAtomContainer originalMolecule)
 	{
-		//cml root element
-		CMLCml rootCML = new CMLCml();
+		//get header
+		CMLCml rootCML = getHeader();
 		
 		CMLSpect test = new CMLSpect();
 		// write spectrum first
@@ -64,8 +63,6 @@ public class MzAnnotateWriter {
 		CMLReactant reactant = new CMLReactant();
 		reactant.addMolecule(originalMol);
 		reactantList.addReactant(reactant);
-		
-		
 		
 		HashMap<Double, List<Candidate>> assignedStructures = spectrum.getAssignedPeakToStructure();
 		
@@ -94,79 +91,51 @@ public class MzAnnotateWriter {
 
 	}
 	
-
-	public static void main(String[] args) throws FileNotFoundException, CDKException {
-
-		//get example data and create the data structure
-		List<String> exampleStructures = new ArrayList<String>();
-		exampleStructures.add("examples/naringenin/naringenin.mol");
-		exampleStructures.add("examples/naringenin/147_1.mol");
-		exampleStructures.add("examples/naringenin/147_2.mol");
-		exampleStructures.add("examples/naringenin/153.mol");
+	/**
+	 * Gets the mzAnnotate for an MassBank entry. If IAtomContainer is null 
+	 * no molecule is supllied and also not written!
+	 * 
+	 * @param spectrum the spectrum
+	 * @param originalMolecule the original molecule
+	 * 
+	 * @return the cML cml
+	 */
+	public CMLCml GetMzAnnotateMassBank(MzAnnotate spectrum, IAtomContainer originalMolecule)
+	{
+		//cml root element
+		CMLCml rootCML = getHeader();
 		
-		int atomCount = 0;
-		int bondCount = 0;
-		int molCount = 0;
+		CMLSpect spect = new CMLSpect();
+		// write spectrum first
+		CMLList cml = spect.getCmlSpect(spectrum);
 		
-		List<IAtomContainer> mols = new ArrayList<IAtomContainer>();
-		for (String file : exampleStructures) {
-			MDLReader reader;
-			List<IAtomContainer> containersList;
-
-			reader = new MDLReader(new FileReader(new File(file)));
-			ChemFile chemFile = (ChemFile) reader.read((ChemObject) new ChemFile());
-			containersList = ChemFileManipulator.getAllAtomContainers(chemFile);
-			IAtomContainer mol = containersList.get(0);
-			
-			String id = "original";
-			if(atomCount > 0)
-				id = "p" + molCount;
-			
-			mol.setID(id);
-			
-			// now preprocess the atom and bond id's
-			for (IBond bond : mol.bonds()) {
-				bondCount++;
-				bond.setID("b" + bondCount);
-			}
-			for (IAtom atom : mol.atoms()) {
-				atomCount++;
-				atom.setID("a" + atomCount);
-			}
-			mols.add(mol);
-			molCount++;
+		if(originalMolecule != null)
+		{
+			Convertor convertor = new Convertor(true, "cml");
+			CMLMolecule originalMol = convertor.cdkAtomContainerToCMLMolecule(originalMolecule);
+			cml.appendChild(originalMol);
 		}
-		
-		//now assign each fragment a peak
-		List<Candidate> candidateStructuresP1 = new ArrayList<Candidate>();
-		IMolecularFormula molecularFormulaP1 = new MolecularFormula();
-		molecularFormulaP1 = MolecularFormulaManipulator.getMolecularFormula(mols.get(1), molecularFormulaP1);
-		double exactMass = MolecularFormulaManipulator.getNaturalExactMass(molecularFormulaP1);
-		//peak 147_1: add to molecular formula another proton because of positive mode TODO!
-		candidateStructuresP1.add(new Candidate("p1", exactMass, molecularFormulaP1, mols.get(1)));
-		//peak 147_2 (has the same molecular formula)
-		candidateStructuresP1.add(new Candidate("p2", exactMass, molecularFormulaP1, mols.get(2)));
 
+		// add to root element
+		rootCML.appendChild(cml);
 		
-		List<Candidate> candidateStructuresP2 = new ArrayList<Candidate>();
-		IMolecularFormula molecularFormulaP2 = new MolecularFormula();
-		molecularFormulaP2 = MolecularFormulaManipulator.getMolecularFormula(mols.get(3), molecularFormulaP2);
-		exactMass = MolecularFormulaManipulator.getNaturalExactMass(molecularFormulaP2);
-		//peak 153, add to molecular formula another proton because of positive mode TODO!
-		candidateStructuresP2.add(new Candidate("p3", exactMass, molecularFormulaP2, mols.get(3)));
+		return rootCML;
+	}
+	
+	/**
+	 * Gets the header.
+	 * 
+	 * @return the header
+	 */
+	private CMLCml getHeader()
+	{
+		//cml root element
+		CMLCml rootCML = new CMLCml();
+		//add convention mzAnnot
+		CMLAttribute convent = new CMLAttribute("convention", "mzAnnot");
+		rootCML.addAttribute(convent);
 		
-		
-		WrapperSpectrum spectrum = new WrapperSpectrum("examples/naringenin/PB000122.txt");
-		Vector<Peak> peaks = spectrum.getPeakList();
-		//peak: 147
-		spectrum.assignPeak(peaks.get(0), candidateStructuresP1);
-		//peak: 153
-		spectrum.assignPeak(peaks.get(1), candidateStructuresP2);
-		
-		
-		MzAnnotateWriter writerTest = new MzAnnotateWriter();
-		CMLCml cml = writerTest.GetMzAnnotate(spectrum, mols.get(0));
-		System.out.println(cml.toXML());
+		return rootCML;
 	}
 
 }
