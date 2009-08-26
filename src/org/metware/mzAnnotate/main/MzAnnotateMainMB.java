@@ -5,7 +5,9 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.util.List;
 
+import org.metware.mzAnnotate.FragmentList;
 import org.metware.mzAnnotate.MzAnnotate;
+import org.metware.mzAnnotate.SpectrumData;
 import org.metware.mzAnnotate.MzAnnotateWriter;
 import org.openscience.cdk.ChemFile;
 import org.openscience.cdk.ChemObject;
@@ -32,13 +34,17 @@ public class MzAnnotateMainMB {
 			
 			//only the spectrum
 			MzAnnotateWriter test = new MzAnnotateWriter();
-			MzAnnotate spectrum = new MzAnnotate("examples/naringenin/PB000122.txt");
-			CMLCml cml = test.GetMzAnnotateMassBank(spectrum, null);
+			SpectrumData specData = new SpectrumData("examples/naringenin/PB000122.txt");
+			MzAnnotate mzAnnotate = new MzAnnotate(specData);
+			CMLCml cml = test.GetMzAnnotateMassBank(mzAnnotate);
 			System.out.println(cml.toXML());
 			
 			//spectrum and mol combined
+			FragmentList fragList = new FragmentList();
+			fragList.addStructure(mol);
+			MzAnnotate mzAnnotate1 = new MzAnnotate(specData, fragList);
 			MzAnnotateWriter test1 = new MzAnnotateWriter();
-			CMLCml cml1 = test1.GetMzAnnotateMassBank(spectrum, mol);
+			CMLCml cml1 = test1.GetMzAnnotateMassBank(mzAnnotate1);
 			System.out.println(cml1.toXML());
 			
 		} catch (FileNotFoundException e) {

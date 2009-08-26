@@ -3,7 +3,6 @@ package org.metware.mzAnnotate;
 import java.util.HashMap;
 import java.util.List;
 
-import org.openscience.cdk.tools.manipulator.MolecularFormulaManipulator;
 import org.xmlcml.cml.base.CMLAttribute;
 import org.xmlcml.cml.element.CMLConditionList;
 import org.xmlcml.cml.element.CMLList;
@@ -16,10 +15,9 @@ import org.xmlcml.cml.element.CMLScalar;
 import org.xmlcml.cml.element.CMLSpectrum;
 
 import de.ipbhalle.metfrag.massbankParser.Peak;
-import de.ipbhalle.metfrag.massbankParser.Spectrum;
+
 
 public class CMLSpect {
-	
 	
 	/**
 	   *  Gets this spectrum as cmlSpect.
@@ -29,7 +27,7 @@ public class CMLSpect {
 	   * @exception  Exception     Database problems
 	   * @exception  CMLException  xml problems.
 	   */
-	  public CMLList getCmlSpect(MzAnnotate spectrumMassbank) {
+	  public CMLList getCmlSpect(SpectrumData spectrumMassbank, HashMap<Peak, List<String>> assignedFragments) {
 	    CMLList cml = new CMLList();
 	    cml.addNamespaceDeclaration("", "http://www.xml-cml.org/schema");
 	    CMLAttribute attribute = new CMLAttribute("dictRef");
@@ -37,18 +35,7 @@ public class CMLSpect {
 	    cml.addAttribute(attribute);
 	    
 	    CMLSpectrum spectrum = new CMLSpectrum();
-	    
-	    
-//	    <list dictRef="cdk:model" xmlns="http://www.xml-cml.org/schema">
-//	    <spectrum id="massbank:PB000123" moleculeRef="CHEBI:50202" type="MS2" 
-//	    xmlns:macie="http://www.xml-cml.org/dict/macie" 
-//	    xmlns:siUnits="http://www.xml-cml.org/units/siUnits" 
-//	    xmlns:ms="http://www.massbank.jp/dict" 
-//	    xmlns:subst="http://www.xml-cml.org/dict/substDict" 
-//	    xmlns:cmlDict="http://www.xml-cml.org/dict/cmlDict" 
-//	    xmlns:cml="http://www.xml-cml.org/dict/cml" 
-//	    xmlns:units="http://www.xml-cml.org/units/units">
-	    
+	    	    
 	    spectrum.addNamespaceDeclaration("macie","http://www.xml-cml.org/dict/macie");
 	    spectrum.addNamespaceDeclaration("siUnits","http://www.xml-cml.org/units/siUnits");
 	    spectrum.addNamespaceDeclaration("ms","http://www.massbank.jp/dict");
@@ -99,6 +86,7 @@ public class CMLSpect {
 	    
 	    spectrum.addPeakList(peaklist);
 	    
+	    //TODO: do it properly
 	    spectrum.setId("massbank:" + spectrumMassbank.getMassBankAccession());
 	    spectrum.setMoleculeRef("PubChem:" + spectrumMassbank.getCID());
 	    spectrum.setType("MS2");
@@ -114,20 +102,23 @@ public class CMLSpect {
 	    	cmlPeak.setId("peak" + count.toString());
 	    	
 	    	//TODO: add molecule refs
-	    	List<Candidate> structures = spectrumMassbank.getAssignedFrags(peak.getMass());
-	    	if(structures != null)
+	    	if(assignedFragments != null)
 	    	{
-		    	for (Candidate candidate : structures) {
-		    		CMLMolecule assignedMols = new CMLMolecule();
-		    		//set ref
-		    		assignedMols.setRef(candidate.getId());
-		    		//set molecular formula
-		    		assignedMols.setFormula(MolecularFormulaManipulator.getString(candidate.getMolecularFormula()));
-		    		cmlPeak.addMolecule(assignedMols);
-				}
+		    	List<String> fragIDs = assignedFragments.get(peak);
+		    	if(fragIDs != null && fragIDs.size() > 0)
+		    	{
+			    	for (String fragID : fragIDs) {
+			    		CMLMolecule assignedMols = new CMLMolecule();
+			    		//set ref
+			    		assignedMols.setRef(fragID);
+			    		//set molecular formula
+			    		//assignedMols.setFormula(MolecularFormulaManipulator.getString(candidate.getMolecularFormula()));
+			    		cmlPeak.addMolecule(assignedMols);
+					}
+		    	}
+		    	peaklist.addPeak(cmlPeak);
 	    	}
 	    	
-	    	peaklist.addPeak(cmlPeak);
 	    	count++;
 		}
 	    

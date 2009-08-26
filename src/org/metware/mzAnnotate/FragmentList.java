@@ -10,6 +10,7 @@ public class FragmentList {
 	
 	private HashMap<String, Fragment> fragMap;
 	private int idCount = 0;
+	private IAtomContainer measuredCompound;
 	
 	/**
 	 * Instantiates a new fragment list.
@@ -32,7 +33,7 @@ public class FragmentList {
 	{
 		IMolecularFormula molFormula = MolecularFormulaManipulator.getMolecularFormula(mol);
 		String id = "f" + idCount;
-		Fragment frag = new Fragment(molFormula, false);
+		Fragment frag = new Fragment(molFormula, mol, false);
 		fragMap.put(id, frag);
 		idCount++;
 		return id;
@@ -40,20 +41,21 @@ public class FragmentList {
 	
 	/**
 	 * Adds the fragment and returns the id from it. With this id it is possible 
-	 * to connect a peak and this fragment later on. Only the molecular formula is known.
+	 * to connect a peak and this fragment later on.
 	 * 
 	 * @param mol the mol
 	 * 
 	 * @return the string
 	 */
-	public String addFragment(IMolecularFormula formula)
+	public String addFragment(IMolecularFormula molFormula)
 	{
 		String id = "f" + idCount;
-		Fragment frag = new Fragment(formula, false);
+		Fragment frag = new Fragment(molFormula, false);
 		fragMap.put(id, frag);
 		idCount++;
 		return id;
 	}
+	
 	
 	/**
 	 * Adds the measured structure.
@@ -66,7 +68,7 @@ public class FragmentList {
 	{
 		IMolecularFormula molFormula = MolecularFormulaManipulator.getMolecularFormula(mol);
 		String id = "m" + idCount;
-		Fragment frag = new Fragment(molFormula, true);
+		Fragment frag = new Fragment(molFormula, mol, true);
 		fragMap.put(id, frag);
 		idCount++;
 		return id;

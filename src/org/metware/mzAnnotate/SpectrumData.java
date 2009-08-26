@@ -142,40 +142,6 @@ public class SpectrumData {
 	}
 	
 	
-	private void prepareAssignedPeaksToStructure()
-	{
-		for (int i = 0; i < peaks.size(); i++) {
-			if(this.assignedPeakToStructure.containsKey(peaks.get(i).getMass()))
-				continue;
-			else
-				this.assignedPeakToStructure.put(peaks.get(i).getMass(), new ArrayList<Fragment>());
-		}
-	}
-	
-	/**
-	 * Gets the assigned fragments to the specified peak mass.
-	 * 
-	 * @param exactMass the exact mass
-	 * 
-	 * @return the assigned frags
-	 */
-	public List<Fragment> getAssignedFrags(double exactMass)
-	{
-		return this.assignedPeakToStructure.get(exactMass);
-	}
-	
-	
-	/**
-	 * Assign peak to a structure.
-	 * 
-	 * @param peak the peak
-	 * @param candidateStructure the candidate structure
-	 */
-	public void assignPeak(Peak peak, List<Fragment> candidateStructure)
-	{
-		this.assignedPeakToStructure.put(peak.getMass(), candidateStructure);
-	}
-	
 	
 	/**
 	 * Set a new peakList.
@@ -335,27 +301,6 @@ public class SpectrumData {
 		return formula;
 	}
 
-
-	/**
-	 * Sets the assigned peak to structure.
-	 * 
-	 * @param assignedPeakToStructure the assigned peak to structure
-	 */
-	public void setAssignedPeakToStructure(HashMap<Double, List<Fragment>> assignedPeakToStructure) {
-		this.assignedPeakToStructure = assignedPeakToStructure;
-	}
-
-
-	/**
-	 * Gets the assigned peak to structure.
-	 * 
-	 * @return the assigned peak to structure
-	 */
-	public HashMap<Double, List<Fragment>> getAssignedPeakToStructure() {
-		//prepare datastructure because it has to contain all peaks
-		prepareAssignedPeaksToStructure();
-		return assignedPeakToStructure;
-	}
 
 
 	/**
