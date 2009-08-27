@@ -10,7 +10,9 @@ public class FragmentList {
 	
 	private HashMap<String, Fragment> fragMap;
 	private int idCount = 0;
-	private IAtomContainer measuredCompound;
+	private boolean isStructureGiven = false;
+	private boolean isFragGiven = false;
+	private MoleculeNumbering molNumbers = null;
 	
 	/**
 	 * Instantiates a new fragment list.
@@ -18,6 +20,7 @@ public class FragmentList {
 	public FragmentList()
 	{
 		this.fragMap = new HashMap<String, Fragment>();
+		this.molNumbers = new MoleculeNumbering();
 	}
 	
 	
@@ -33,9 +36,16 @@ public class FragmentList {
 	{
 		IMolecularFormula molFormula = MolecularFormulaManipulator.getMolecularFormula(mol);
 		String id = "f" + idCount;
+		
+		
+		int atomStart = molNumbers.getAtomCount();
+		int bondStart = molNumbers.getAtomCount();
+		mol = molNumbers.getNumberedMol(mol, atomStart, bondStart);
+		
 		Fragment frag = new Fragment(molFormula, mol, false);
 		fragMap.put(id, frag);
 		idCount++;
+		setFragGiven(true);
 		return id;
 	}
 	
@@ -53,6 +63,7 @@ public class FragmentList {
 		Fragment frag = new Fragment(molFormula, false);
 		fragMap.put(id, frag);
 		idCount++;
+		setFragGiven(true);
 		return id;
 	}
 	
@@ -68,9 +79,15 @@ public class FragmentList {
 	{
 		IMolecularFormula molFormula = MolecularFormulaManipulator.getMolecularFormula(mol);
 		String id = "m" + idCount;
+		
+		int atomStart = molNumbers.getAtomCount();
+		int bondStart = molNumbers.getAtomCount();
+		mol = molNumbers.getNumberedMol(mol, atomStart, bondStart);
+		
 		Fragment frag = new Fragment(molFormula, mol, true);
 		fragMap.put(id, frag);
 		idCount++;
+		setStructureGiven(true);
 		return id;
 	}
 	
@@ -87,6 +104,7 @@ public class FragmentList {
 		Fragment frag = new Fragment(formula, true);
 		fragMap.put(id, frag);
 		idCount++;
+		setStructureGiven(true);
 		return id;
 	}
 	
@@ -107,6 +125,46 @@ public class FragmentList {
 	 */
 	public HashMap<String, Fragment> getFragList() {
 		return fragMap;
+	}
+
+
+	/**
+	 * Sets the checks for measured structure.
+	 * 
+	 * @param isStructureGiven the new checks for measured structure
+	 */
+	public void setStructureGiven(boolean isStructureGiven) {
+		this.isStructureGiven = isStructureGiven;
+	}
+
+
+	/**
+	 * Checks if is checks for measured structure.
+	 * 
+	 * @return true, if is checks for measured structure
+	 */
+	public boolean isStructureGiven() {
+		return isStructureGiven;
+	}
+
+
+	/**
+	 * Sets the frag given.
+	 * 
+	 * @param isFragGiven the new frag given
+	 */
+	public void setFragGiven(boolean isFragGiven) {
+		this.isFragGiven = isFragGiven;
+	}
+
+
+	/**
+	 * Checks if is frag given.
+	 * 
+	 * @return true, if is frag given
+	 */
+	public boolean isFragGiven() {
+		return isFragGiven;
 	}
 
 }

@@ -11,6 +11,7 @@ public class MzAnnotate {
 	private SpectrumData specData;
 	private FragmentList fragMap;
 	private HashMap<Peak, List<String>> assignedFragments;
+	private boolean isReactionGiven = false;
 	
 
 	/**
@@ -49,6 +50,8 @@ public class MzAnnotate {
 	 */
 	public void assignPeakToFragment(Peak peak, String fragID) throws Exception
 	{
+		this.setReactionGiven(true);
+		
 		HashMap<String, Fragment> fragList = this.fragMap.getFragList();
 		List<String> fragIDList = null;
 		//id is known and can be assigned
@@ -123,6 +126,24 @@ public class MzAnnotate {
 	 */
 	public void setAssignedFragments(HashMap<Peak, List<String>> assignedFragments) {
 		this.assignedFragments = assignedFragments;
+	}
+
+	/**
+	 * Sets the reaction given.
+	 * 
+	 * @param isReactionGiven the new reaction given
+	 */
+	public void setReactionGiven(boolean isReactionGiven) {
+		this.isReactionGiven = isReactionGiven;
+	}
+
+	/**
+	 * Checks if is reaction given.
+	 * 
+	 * @return true, if is reaction given
+	 */
+	public boolean isReactionGiven() {
+		return isReactionGiven;
 	}
 
 

@@ -47,10 +47,9 @@ public class MzAnnotateMain {
 			containersList = ChemFileManipulator.getAllAtomContainers(chemFile);
 			IAtomContainer mol = containersList.get(0);
 			mols.add(mol);
-			//add the measured structure to the list
-			fragIDOrig = fragList.addStructure(mol);
 		}
-		
+		//add the measured structure to the list
+		fragIDOrig = fragList.addStructure(mols.get(0));
 		//add the fragment structures 147
 		String fragID1 = fragList.addFragment(mols.get(1));
 		String fragID2 = fragList.addFragment(mols.get(2));
@@ -73,7 +72,7 @@ public class MzAnnotateMain {
 		
 		
 		MzAnnotateWriter writerTest = new MzAnnotateWriter();
-		CMLCml cml = writerTest.GetMzAnnotate(mzAnno);
+		CMLCml cml = writerTest.getMzAnnotate(mzAnno);
 		System.out.println(cml.toXML());
 	}
 }

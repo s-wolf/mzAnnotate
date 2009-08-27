@@ -27,12 +27,7 @@ public class CMLSpect {
 	   * @exception  Exception     Database problems
 	   * @exception  CMLException  xml problems.
 	   */
-	  public CMLList getCmlSpect(SpectrumData spectrumMassbank, HashMap<Peak, List<String>> assignedFragments) {
-	    CMLList cml = new CMLList();
-	    cml.addNamespaceDeclaration("", "http://www.xml-cml.org/schema");
-	    CMLAttribute attribute = new CMLAttribute("dictRef");
-	    attribute.setValue("cdk:model");
-	    cml.addAttribute(attribute);
+	  public CMLSpectrum getCmlSpect(SpectrumData spectrumMassbank, HashMap<Peak, List<String>> assignedFragments) {
 	    
 	    CMLSpectrum spectrum = new CMLSpectrum();
 	    	    
@@ -118,11 +113,14 @@ public class CMLSpect {
 		    	}
 		    	peaklist.addPeak(cmlPeak);
 	    	}
+	    	else
+	    	{
+	    		peaklist.addPeak(cmlPeak);
+	    	}
 	    	
 	    	count++;
 		}
 	    
-	    cml.appendChild(spectrum);
-	    return cml;
+	    return spectrum;
 	  }
 }

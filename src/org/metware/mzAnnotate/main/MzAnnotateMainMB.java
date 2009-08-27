@@ -36,7 +36,7 @@ public class MzAnnotateMainMB {
 			MzAnnotateWriter test = new MzAnnotateWriter();
 			SpectrumData specData = new SpectrumData("examples/naringenin/PB000122.txt");
 			MzAnnotate mzAnnotate = new MzAnnotate(specData);
-			CMLCml cml = test.GetMzAnnotateMassBank(mzAnnotate);
+			CMLCml cml = test.getMzAnnotate(mzAnnotate);
 			System.out.println(cml.toXML());
 			
 			//spectrum and mol combined
@@ -44,7 +44,7 @@ public class MzAnnotateMainMB {
 			fragList.addStructure(mol);
 			MzAnnotate mzAnnotate1 = new MzAnnotate(specData, fragList);
 			MzAnnotateWriter test1 = new MzAnnotateWriter();
-			CMLCml cml1 = test1.GetMzAnnotateMassBank(mzAnnotate1);
+			CMLCml cml1 = test1.getMzAnnotate(mzAnnotate1);
 			System.out.println(cml1.toXML());
 			
 		} catch (FileNotFoundException e) {

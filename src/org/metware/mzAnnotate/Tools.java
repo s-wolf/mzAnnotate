@@ -13,9 +13,6 @@ import de.ipbhalle.metfrag.massbankParser.Peak;
 
 public class Tools {
 	
-	Integer atomCount = 0;
-	Integer bondCount = 0;
-	
 	/**
 	 * Gets the exact mass.
 	 * 
@@ -27,32 +24,6 @@ public class Tools {
 	{
 		return MolecularFormulaManipulator.getNaturalExactMass(molecularFormula);
 	}
-	
-	
-	/**
-	 * Gets the numbered mol.
-	 * 
-	 * @param mol the mol
-	 * @param start the start
-	 * 
-	 * @return the numbered mol
-	 */
-	public IAtomContainer getNumberedMol(IAtomContainer mol, int atomStart, int bondStart)
-	{		
-		bondCount = bondStart;
-		atomCount = atomStart;
-		
-		for (IBond bond : mol.bonds()) {
-			bondCount++;
-			bond.setID("b" + bondCount.toString());
-    		for (IAtom atom : bond.atoms()) {
-    			atomCount++;
-    			atom.setID("a" + atomCount.toString());
-			}
-		}
-		return mol;
-	}
-	
 	
 	/**
 	 * Gets the measured molecule. This is the compound which was measured!
@@ -72,6 +43,16 @@ public class Tools {
 	}
 	
 	
+	/**
+	 * Gets the peak.
+	 * 
+	 * @param specData the spec data
+	 * @param mz the mz
+	 * 
+	 * @return the peak
+	 * 
+	 * @throws Exception the exception
+	 */
 	public static Peak getPeak(SpectrumData specData, double mz) throws Exception
 	{
 		Vector<Peak> peakList = new Vector<Peak>();
@@ -84,23 +65,41 @@ public class Tools {
 		throw new Exception("No corresponding Peak Object found!");
 	}
 	
+	
 	/**
-	 * Gets the last bond count.
+	 * Checks if the compound structure from the measured molecule is given
 	 * 
-	 * @return the last bond count
+	 * @param mzAnno the mz anno
+	 * 
+	 * @return true, if is structure given
 	 */
-	public int getLastBondCount()
+	public static boolean isStructureGiven(MzAnnotate mzAnno)
 	{
-		return this.bondCount;
+		boolean isGiven = false;
+		if(mzAnno.getFragMap() == null)
+			return false;
+		else if(mzAnno.getFragMap() != null && mzAnno.getFragMap().isStructureGiven())
+			return true;
+		
+		return isGiven;
 	}
 	
 	/**
-	 * Gets the last atom count.
+	 * Checks if a molecule list (fragments) is available.
 	 * 
-	 * @return the last atom count
+	 * @param mzAnno the mz anno
+	 * 
+	 * @return true, if is molecule list given
 	 */
-	public int getLastAtomCount()
+	public static boolean isMoleculeListGiven(MzAnnotate mzAnno)
 	{
-		return this.atomCount;
+		boolean isGiven = false;
+		if(mzAnno.getFragMap() == null)
+			return false;
+		else if(mzAnno.getFragMap() != null && mzAnno.getFragMap().isFragGiven())
+			return true;
+		
+		return isGiven;
 	}
+	
 }

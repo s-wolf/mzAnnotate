@@ -1,12 +1,14 @@
 package org.metware.mzAnnotate;
 
 import java.util.HashMap;
+import java.util.List;
 
 import org.openscience.cdk.libio.cml.Convertor;
 import org.xmlcml.cml.base.CMLAttribute;
 import org.xmlcml.cml.element.CMLCml;
 import org.xmlcml.cml.element.CMLList;
 import org.xmlcml.cml.element.CMLMolecule;
+import org.xmlcml.cml.element.CMLMoleculeList;
 import org.xmlcml.cml.element.CMLProduct;
 import org.xmlcml.cml.element.CMLProductList;
 import org.xmlcml.cml.element.CMLReactant;
@@ -18,49 +20,154 @@ import de.ipbhalle.metfrag.massbankParser.Peak;
 
 public class MzAnnotateWriter {
 	
+	
 	/**
-	 * Gets the mzAnnotate.
+	 * Gets the mzAnnotate. The mzAnnotate object is analyzed and then the
+	 * necessary parts are returned. See the use cases for the different
+	 * outputs.
+	 * 
+	 * @param mzAnno the mz anno
+	 * 
+	 * @return the mz annotate
+	 */
+	public CMLCml getMzAnnotate(MzAnnotate mzAnno)
+	{
+		//get header
+		CMLCml rootCML = getHeader();
+		rootCML.addNamespaceDeclaration("", "http://www.xml-cml.org/schema");
+		
+		CMLSpect spect = new CMLSpect();
+
+		// the spectrum is mandatory
+		rootCML.appendChild(spect.getCmlSpect(mzAnno.getSpecData(), mzAnno.getAssignedFragments()));
+		
+		//reaction list
+		if(mzAnno.isReactionGiven())
+		{
+			rootCML = getReactionList(mzAnno, rootCML);
+		}
+		
+		CMLMoleculeList allMolecules = new CMLMoleculeList();
+		CMLMolecule cmlMeasuredCompound = new CMLMolecule();
+		//now check if there is the measured structure given
+		if(Tools.isStructureGiven(mzAnno))
+		{
+			Fragment originalStructure = Tools.getMeasuredCompound(mzAnno.getFragMap().getFragList());
+			if(originalStructure.isStructureKnown())
+			{
+				cmlMeasuredCompound = getMolecule(mzAnno);
+			}
+			else
+			{
+				//TODO! no structure given but only the molecular formula!
+			}	
+		}
+		//no structure given...measured compound unknown...
+		else
+		{
+			//TODO
+		}
+		
+		//molecule list
+		if(Tools.isMoleculeListGiven(mzAnno))
+		{
+			allMolecules = getMoleculeList(mzAnno);
+		}
+		
+		//also add the measured compound
+		allMolecules.addMolecule(cmlMeasuredCompound);
+		
+		//surround with list dict...
+		CMLList cmlList = new CMLList();
+		CMLAttribute attribute = new CMLAttribute("dictRef");
+	    attribute.setValue("cdk:moleculeSet");
+	    cmlList.addAttribute(attribute);
+	    cmlList.appendChild(allMolecules);
+		//now add the molecule list to the previously generated cml
+	    rootCML.appendChild(cmlList);
+		
+		return rootCML;		
+	}
+	
+	
+	/**
+	 * Gets the rectionList. For now only the reactant (measured compound)
+	 * and the products are listed.
+	 * TODO: SpectralTrees have to be implemented....
 	 * 
 	 * @param data the spectrum
 	 * @param originalMolecule the original molecule
 	 * 
 	 * @return the cML cml
 	 */
-	public CMLCml GetMzAnnotate(MzAnnotate mzAnno)
+	private CMLCml getReactionList(MzAnnotate mzAnno, CMLCml cml)
 	{
-		//get header
-		CMLCml rootCML = getHeader();
+		HashMap<String, Fragment> fragList = mzAnno.getFragMap().getFragList();
+		HashMap<Peak, List<String>> assignedFrags = mzAnno.getAssignedFragments();
 		
-		CMLSpect test = new CMLSpect();
-		// write spectrum first
-		CMLList cml = test.getCmlSpect(mzAnno.getSpecData(), mzAnno.getAssignedFragments());
-		
-		
-		Convertor convertor = new Convertor(true, "cml");
-		Fragment fragOrig = Tools.getMeasuredCompound(mzAnno.getFragMap().getFragList());
-		CMLMolecule cmlMol = null;
-		if(fragOrig.isStructureKnown())
-			cmlMol = convertor.cdkAtomContainerToCMLMolecule(fragOrig.getMolecule());
-		else
-		{
-			//TODO!
-		}	
-			
 		CMLReactionList reactionList = new CMLReactionList();
 		CMLReaction reaction = new CMLReaction();
 		reactionList.addReaction(reaction);
+		
+		//set the reactant
+		for (String fragID : fragList.keySet()) {	
+			//skip the product
+			if(fragList.get(fragID).isMeasuredCompound())
+			{
+				CMLReactantList reactantList = new CMLReactantList();
+				reaction.addReactantList(reactantList);
+				//add reactant
+				CMLMolecule reactantRef = new CMLMolecule();
+				CMLAttribute refReactant = new CMLAttribute("ref");
+				refReactant.setValue(fragID);
+				reactantRef.addAttribute(refReactant);
+				CMLReactant reactant = new CMLReactant();;
+				reactant.addMolecule(reactantRef);
+				reactantList.addReactant(reactant);
+				break;
+			}
+		}
+		
 
-		CMLReactantList reactantList = new CMLReactantList();
-		reaction.addReactantList(reactantList);
-		CMLReactant reactant = new CMLReactant();
-		reactant.addMolecule(cmlMol);
-		reactantList.addReactant(reactant);
-		
-		
-		HashMap<String, Fragment> fragList = mzAnno.getFragMap().getFragList();
-		
 		CMLProductList productList = new CMLProductList();
 		reaction.addProductList(productList);
+		
+		//now set the assigned structures in the reaction list
+		for (String fragID : fragList.keySet()) {	
+			//skip the product
+			if(!fragList.get(fragID).isMeasuredCompound())
+			{
+				CMLMolecule productRef = new CMLMolecule();
+				
+				CMLAttribute ref = new CMLAttribute("ref");
+				ref.setValue(fragID);
+				productRef.addAttribute(ref);
+				
+				CMLProduct product = new CMLProduct();
+				product.addMolecule(productRef);
+				productList.addProduct(product);
+			}
+		}
+
+		cml.appendChild(reactionList);
+		
+		return cml;
+
+	}
+	
+	
+	/**
+	 * Gets the molecule list as mzAnnotate.
+	 * 
+	 * @param mzAnno the mz anno
+	 * 
+	 * @return the molecule list
+	 */
+	private CMLMoleculeList getMoleculeList(MzAnnotate mzAnno)
+	{
+		HashMap<String, Fragment> fragList = mzAnno.getFragMap().getFragList();
+		CMLMoleculeList moleculeList = new CMLMoleculeList();
+		Convertor convertor = new Convertor(true, "cml");
 		
 		for (String fragID : fragList.keySet()) {	
 			Fragment frag = fragList.get(fragID);
@@ -69,67 +176,47 @@ public class MzAnnotateWriter {
 				if(frag.isStructureKnown())
 				{
 					frag.getMolecule().setID(fragID);
-					CMLMolecule productMol = convertor.cdkAtomContainerToCMLMolecule(frag.getMolecule());
-					CMLProduct product = new CMLProduct();
-					product.addMolecule(productMol);
-					productList.addProduct(product);
+					CMLMolecule molecule = convertor.cdkAtomContainerToCMLMolecule(frag.getMolecule());
+					moleculeList.addMolecule(molecule);
 				}
 				else
 				{
-					//TODO!
+					//TODO! only molecular formula given
 				}
-			
 			}
 		}
-
-		cml.appendChild(reactionList);
-
-		// add to root element
-		rootCML.appendChild(cml);
-		
-		return rootCML;
-
+	   
+		return moleculeList;
 	}
 	
+	
 	/**
-	 * Gets the mzAnnotate for an MassBank entry. If IAtomContainer is null 
-	 * no molecule is supllied and also not written!
+	 * Gets the molecule. This is used when the original structure is given!
 	 * 
-	 * @param data the data
-	 * @param originalMolecule the original molecule
+	 * @param mzAnno the mz anno
 	 * 
-	 * @return the cML cml
+	 * @return the molecule
 	 */
-	public CMLCml GetMzAnnotateMassBank(MzAnnotate mzAnno)
+	private CMLMolecule getMolecule(MzAnnotate mzAnno)
 	{
-		//cml root element
-		CMLCml rootCML = getHeader();
 		
-		CMLSpect spect = new CMLSpect();
-		// write spectrum first
-		CMLList cml = spect.getCmlSpect(mzAnno.getSpecData(), null);
+		CMLMolecule cmlMol = new CMLMolecule();
+		
 		Fragment originalMolecule = Tools.getMeasuredCompound(mzAnno.getFragMap().getFragList());
-		if(originalMolecule != null && originalMolecule.isStructureKnown())
+		if(originalMolecule.isStructureKnown())
 		{
-			Convertor convertor = new Convertor(true, "cml");
-			CMLMolecule originalMol = convertor.cdkAtomContainerToCMLMolecule(originalMolecule.getMolecule());
-			cml.appendChild(originalMol);
-		}
-		//no molecule given...maybe only a molecular formula
-		else if(originalMolecule != null)
-		{
-			//TODO!
-//			Convertor convertor = new Convertor(true, "cml");
-//			CMLMolecule originalMol = convertor.cdkAtomContainerToCMLMolecule();
-//			cml.appendChild(originalMol);
-			
-		}
 
-		// add to root element
-		rootCML.appendChild(cml);
+			Convertor convertor = new Convertor(true, "cml");
+			cmlMol = convertor.cdkAtomContainerToCMLMolecule(originalMolecule.getMolecule());
+		}
+		else
+		{
+			//TODO! only molecular formula given!			
+		}
 		
-		return rootCML;
+		return cmlMol;
 	}
+	
 	
 	/**
 	 * Gets the header.
