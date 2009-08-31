@@ -58,7 +58,8 @@ public class SpectrumData {
 	/**
 	 * Reads in a MassBank flat file from a given location.
 	 * 
-	 * @param filename the filename
+	 * @param spectrum the spectrum
+	 * @param MassBankAccession the mass bank accession
 	 */
 	public SpectrumData(Spectrum spectrum, String MassBankAccession)
 	{
