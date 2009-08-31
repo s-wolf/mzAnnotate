@@ -47,6 +47,8 @@ public class MzAnnotateMainMB {
 			CMLCml cml1 = test1.getMzAnnotate(mzAnnotate1);
 			System.out.println(cml1.toXML());
 			
+			System.out.println(test1.getMzannotateStringFormatted(mzAnnotate1));
+			
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
