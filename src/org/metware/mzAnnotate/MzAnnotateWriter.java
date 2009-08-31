@@ -48,7 +48,7 @@ public class MzAnnotateWriter {
 		CMLCml rootCML = getHeader();
 		rootCML.addNamespaceDeclaration("", "http://www.xml-cml.org/schema");
 		
-		CMLSpect spect = new CMLSpect();
+		CMLSpectMzAnnot spect = new CMLSpectMzAnnot();
 
 		// the spectrum is mandatory
 		rootCML.appendChild(spect.getCmlSpect(mzAnno.getSpecData(), mzAnno.getAssignedFragments()));
