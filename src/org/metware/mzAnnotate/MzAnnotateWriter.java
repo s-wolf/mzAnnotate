@@ -1,7 +1,16 @@
 package org.metware.mzAnnotate;
 
+import java.io.StringReader;
+import java.io.StringWriter;
 import java.util.HashMap;
 import java.util.List;
+
+import javax.xml.transform.OutputKeys;
+import javax.xml.transform.Source;
+import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.stream.StreamResult;
+import javax.xml.transform.stream.StreamSource;
 
 import org.openscience.cdk.libio.cml.Convertor;
 import org.xmlcml.cml.base.CMLAttribute;
@@ -15,6 +24,9 @@ import org.xmlcml.cml.element.CMLReactant;
 import org.xmlcml.cml.element.CMLReactantList;
 import org.xmlcml.cml.element.CMLReaction;
 import org.xmlcml.cml.element.CMLReactionList;
+
+import com.sun.org.apache.xml.internal.serialize.OutputFormat;
+
 
 import de.ipbhalle.metfrag.massbankParser.Peak;
 
@@ -88,6 +100,46 @@ public class MzAnnotateWriter {
 		
 		return rootCML;		
 	}
+	
+	
+	/**
+	 * Gets the mzannotate string formatted.
+	 * 
+	 * @param mzAnno the mz anno
+	 * 
+	 * @return the mzannotate string formatted
+	 */
+	public String getMzannotateStringFormatted(MzAnnotate mzAnno)
+	{
+		CMLCml mzAnnoObject = getMzAnnotate(mzAnno);
+		return prettyFormat(mzAnnoObject.toXML(), 2);
+	}
+	
+	
+	/**
+	 * Pretty format.
+	 * 
+	 * @param input the input
+	 * @param indent the indent
+	 * 
+	 * @return the string
+	 */
+	private static String prettyFormat(String input, int indent) {
+	    try {
+	        Source xmlInput = new StreamSource(new StringReader(input));
+	        StringWriter stringWriter = new StringWriter();
+	        StreamResult xmlOutput = new StreamResult(stringWriter);
+	        Transformer transformer = TransformerFactory.newInstance().newTransformer(); 
+	        transformer.setOutputProperty(OutputKeys.INDENT, "yes");
+	        transformer.setOutputProperty("{http://xml.apache.org/xslt}indent-amount", String.valueOf(indent));
+	        transformer.transform(xmlInput, xmlOutput);
+	        return xmlOutput.getWriter().toString();
+	    } catch (Exception e) {
+	        throw new RuntimeException(e); // simple exception handling, please review it
+	    }
+	}
+
+
 	
 	
 	/**
