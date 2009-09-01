@@ -392,8 +392,11 @@ public class MzAnnotateReader {
 		      //no more spectrum data
 		      if(event.asEndElement().getName().getLocalPart().equals(SPECTRUM) && isSpectrumData)
 		      {
+		    	  spectrumExactMass = Double.parseDouble(spectrumMetaDataMap.get(EXACTMASS));
+		  		  //add assignment method to spectrum!
+		    	  spectrumAssignmentMethod = spectrumMetaDataMap.get(ASSIGNMENTMETHOD);
 		    	  //it is possible to have several spectra in one file
-		    	  spectra.add(new Spectrum(Integer.parseInt(spectrumCollisionEnergy.substring(0, 1)), spectrumPeakList, spectrumExactMass, spectrumMode));
+		    	  spectra.add(new Spectrum(Integer.parseInt(spectrumCollisionEnergy.substring(0, 2)), spectrumPeakList, spectrumExactMass, spectrumMode));
 		    	  isSpectrumData = false;
 		      }
 		      
@@ -473,10 +476,6 @@ public class MzAnnotateReader {
 		      break; 
 		  } 
 		}
-		
-		
-		spectrumExactMass = Double.parseDouble(spectrumMetaDataMap.get(EXACTMASS));
-		spectrumAssignmentMethod = spectrumMetaDataMap.get(ASSIGNMENTMETHOD);
 		
 		
 		FragmentList fragList = new FragmentList();
