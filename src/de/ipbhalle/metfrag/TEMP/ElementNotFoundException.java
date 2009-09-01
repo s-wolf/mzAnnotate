@@ -1,4 +1,4 @@
-package de.ipbhalle.metfrag.massbankParser;
+package de.ipbhalle.metfrag.TEMP;
 
 public class ElementNotFoundException extends Exception {
 

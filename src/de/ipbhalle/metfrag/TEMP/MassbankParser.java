@@ -1,4 +1,4 @@
-package de.ipbhalle.metfrag.massbankParser;
+package de.ipbhalle.metfrag.TEMP;
 
 import java.io.*;
 import java.util.Vector;
@@ -29,7 +29,7 @@ public class MassbankParser{
 		String IUPAC = "";
 		int mode = 0, collisionEnergy;
 		double mass = 0.0, focusedMass = 0.0;
-		Vector<Peak> peaks;
+		Vector<PeakMzAnno> peaks;
 		Vector<Spectrum> spectra = new Vector<Spectrum>();
 		//Vector<Compound> compounds = new Vector<Compound>(); not used....
 		TreeMap<String, Integer> map = new TreeMap<String, Integer>();
@@ -132,12 +132,12 @@ public class MassbankParser{
 		  	  line = reader.readLine();
 		  	}
 				line = reader.readLine();
-				peaks = new Vector<Peak>();
+				peaks = new Vector<PeakMzAnno>();
 				while (line != null && !line.contains("//")){
 					array = line.split(" ");
 					// array[2] is mass, array[3] abs. intensity, array[4] rel. intensity.
 					// spectra.size shows how many spectra had a lower energy than the spectrum this peak belongs to.
-					peaks.add(new Peak(Double.parseDouble(array[2]), Double.parseDouble(array[3]), Double.parseDouble(array[4]), collisionEnergy));
+					peaks.add(new PeakMzAnno(Double.parseDouble(array[2]), Double.parseDouble(array[3]), Double.parseDouble(array[4]), collisionEnergy));
 					line = reader.readLine();
 				}
 				spectra.add(new Spectrum(collisionEnergy, peaks, mass, mode, IUPAC, linkPubChem, linkKEGG, nameTrivial, formula));

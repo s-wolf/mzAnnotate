@@ -1,7 +1,7 @@
-package de.ipbhalle.metfrag.massbankParser;
+package de.ipbhalle.metfrag.TEMP;
 
 
-public class Peak implements Comparable<Peak>, java.io.Serializable {
+public class PeakMzAnno implements Comparable<PeakMzAnno>, java.io.Serializable {
 
 	private double mass;
 	private double intensity;
@@ -19,7 +19,7 @@ public class Peak implements Comparable<Peak>, java.io.Serializable {
 	 * @param relIntensityDB the rel intensity db
 	 * @param energy the energy
 	 */
-	public Peak(double mass, double intensity, double relIntensityDB, int energy){
+	public PeakMzAnno(double mass, double intensity, double relIntensityDB, int energy){
 		this.mass = mass;
 		this.intensity = intensity;
 		this.relIntensityDB = relIntensityDB;
@@ -35,7 +35,7 @@ public class Peak implements Comparable<Peak>, java.io.Serializable {
 	 * @param intensity the intensity
 	 * @param energy the energy
 	 */
-	public Peak(double mass, double intensity, int energy){
+	public PeakMzAnno(double mass, double intensity, int energy){
 		this.mass = mass;
 		this.intensity = intensity;
 		this.relIntensityDB = 0.0;
@@ -51,7 +51,7 @@ public class Peak implements Comparable<Peak>, java.io.Serializable {
 	 * @param intensity the intensity
 	 * @param energy the energy
 	 */
-	public Peak(double mass, double intensity){
+	public PeakMzAnno(double mass, double intensity){
 		this.mass = mass;
 		this.intensity = intensity;
 		this.relIntensityDB = 0.0;
@@ -118,11 +118,11 @@ public class Peak implements Comparable<Peak>, java.io.Serializable {
 		this.highestEnergy = energy;		
 	}
 	
-	public boolean isEnergyAdjacent(Peak another){
+	public boolean isEnergyAdjacent(PeakMzAnno another){
 		return (highestEnergy+1 >= another.lowestEnergy && lowestEnergy-1 <= another.highestEnergy);
 	}
 
-	public int compareTo(Peak p){
+	public int compareTo(PeakMzAnno p){
 		if (this.mass < p.mass) return -1;
 		else if (this.mass == p.mass) return 0;
 		return 1;

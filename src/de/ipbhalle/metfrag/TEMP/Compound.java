@@ -1,4 +1,4 @@
-package de.ipbhalle.metfrag.massbankParser;
+package de.ipbhalle.metfrag.TEMP;
 
 import java.util.Vector;
 import java.util.Iterator;
@@ -110,17 +110,17 @@ public class Compound implements java.io.Serializable {
     }
   } 
   
-  public Vector<Peak> mergePeaks(double threshold, boolean intenseMerge){
+  public Vector<PeakMzAnno> mergePeaks(double threshold, boolean intenseMerge){
     int numberOfPeaks = 0, index = 0, indexSmallestPeak = 0; // index of the smallest peak belonging in the merge group
     boolean mergedsth = true;
     int refPeakIndex= 0, mergeRange = 0;
-    Peak refPeak = null, mergePeak = null;
+    PeakMzAnno refPeak = null, mergePeak = null;
     for (Iterator<Spectrum> iter = spectra.iterator(); iter.hasNext();){
       numberOfPeaks += iter.next().getPeaks().size();
     }
-    Peak[] peaks = new Peak[numberOfPeaks];
+    PeakMzAnno[] peaks = new PeakMzAnno[numberOfPeaks];
     for (Iterator<Spectrum> iter = spectra.iterator(); iter.hasNext();){
-      for (Iterator<Peak> peakIter = iter.next().getPeaks().iterator(); peakIter.hasNext();){
+      for (Iterator<PeakMzAnno> peakIter = iter.next().getPeaks().iterator(); peakIter.hasNext();){
         peaks[index] = peakIter.next();
         ++index;
       }
@@ -171,7 +171,7 @@ public class Compound implements java.io.Serializable {
       if (index != peaks.length) massUntilMerge = peaks[index].getMass();
     }
     
-    Vector<Peak> mergedPeaks = new Vector<Peak>();
+    Vector<PeakMzAnno> mergedPeaks = new Vector<PeakMzAnno>();
     for (index = 0; index < peaks.length; ++index){
       if (peaks[index] != null) mergedPeaks.add(peaks[index]);
     }

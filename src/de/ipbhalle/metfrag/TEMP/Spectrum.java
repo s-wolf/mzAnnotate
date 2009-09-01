@@ -1,4 +1,4 @@
-package de.ipbhalle.metfrag.massbankParser;
+package de.ipbhalle.metfrag.TEMP;
 
 import java.util.Comparator;
 import java.util.Vector;
@@ -9,7 +9,7 @@ import java.util.Iterator;
 public class Spectrum  implements java.io.Serializable, Comparable<Spectrum> {
 
 	private int collisionEnergy;
-	private Vector<Peak> peaks;
+	private Vector<PeakMzAnno> peaks;
 	private double tic;
 	private double exactMass;
 	private int mode;
@@ -19,7 +19,7 @@ public class Spectrum  implements java.io.Serializable, Comparable<Spectrum> {
 	private String nameTrivial;
 	private String formula;
 	
-	public Spectrum(int collisionEnergy, double tic, Vector<Peak> peaks, double exactMass, int mode, String InchI, int CID, String KEGG, String nameTrivial, String formula){
+	public Spectrum(int collisionEnergy, double tic, Vector<PeakMzAnno> peaks, double exactMass, int mode, String InchI, int CID, String KEGG, String nameTrivial, String formula){
 		this.collisionEnergy = collisionEnergy;
 		this.tic = tic;
 		this.peaks = peaks;
@@ -40,7 +40,7 @@ public class Spectrum  implements java.io.Serializable, Comparable<Spectrum> {
 	 * @param exactMass the exact mass
 	 * @param mode the mode
 	 */
-	public Spectrum(int collisionEnergy, Vector<Peak> peaks, double exactMass, int mode){
+	public Spectrum(int collisionEnergy, Vector<PeakMzAnno> peaks, double exactMass, int mode){
 		this.collisionEnergy = collisionEnergy;
 		this.tic = 0.0;
 		this.peaks = peaks;
@@ -53,7 +53,7 @@ public class Spectrum  implements java.io.Serializable, Comparable<Spectrum> {
 		this.setFormula("");
 	}
 	
-	public Spectrum(int collisionEnergy, Vector<Peak> peaks, double exactMass, int mode, String InchI, int CID, String KEGG, String nameTrivial, String formula){
+	public Spectrum(int collisionEnergy, Vector<PeakMzAnno> peaks, double exactMass, int mode, String InchI, int CID, String KEGG, String nameTrivial, String formula){
 		this(collisionEnergy, 0.0, peaks, exactMass, mode, InchI, CID, KEGG, nameTrivial, formula);
 	}	
 	
@@ -73,7 +73,7 @@ public class Spectrum  implements java.io.Serializable, Comparable<Spectrum> {
 		return exactMass;
 	}
 
-	public Vector<Peak> getPeaks(){
+	public Vector<PeakMzAnno> getPeaks(){
 	 return peaks;
 	}
 	
@@ -103,7 +103,7 @@ public class Spectrum  implements java.io.Serializable, Comparable<Spectrum> {
 		this.tic = tic;
 	}
 	
-	public void setPeaks(Vector<Peak> peaks){
+	public void setPeaks(Vector<PeakMzAnno> peaks){
 		this.peaks = peaks;
 	}
 	
@@ -118,7 +118,7 @@ public class Spectrum  implements java.io.Serializable, Comparable<Spectrum> {
 		double number = peaks.size(), i = 1.0;
 		double prob = 1.0;
 		
-		for (Peak peak : peaks){
+		for (PeakMzAnno peak : peaks){
 			//prob = lambda*Math.exp(-1*lambda*i/number);
 			peak.setRelIntensity(i/number);
 			++i;
@@ -126,7 +126,7 @@ public class Spectrum  implements java.io.Serializable, Comparable<Spectrum> {
 	}
 	
 	public void strictFilter(double threshold){
-		for (Iterator<Peak> pIter = peaks.iterator(); pIter.hasNext();){
+		for (Iterator<PeakMzAnno> pIter = peaks.iterator(); pIter.hasNext();){
 			if (pIter.next().getRelIntensityDB() < threshold){
 				pIter.remove();
 			}
@@ -136,10 +136,10 @@ public class Spectrum  implements java.io.Serializable, Comparable<Spectrum> {
 	public void calculateRaw(){
 		if (tic != 0.0) {
 			double sum = 0.0;
-			for (Peak peak : peaks){
+			for (PeakMzAnno peak : peaks){
 				sum += peak.getIntensity();
 			}		
-			for (Peak peak : peaks){
+			for (PeakMzAnno peak : peaks){
 				peak.setRelIntensity(tic*peak.getIntensity()/sum);
 			}
 		}
