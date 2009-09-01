@@ -126,7 +126,7 @@ public class MzAnnotateReader {
 		String spectrumName = "";
 		Double spectrumExactMass = 0.0;
 		Map<String, String> spectrumMetaDataMap = new HashMap<String, String>();
-		Map<Double, String> spectrumPeakToStructure = new HashMap<Double, String>();
+		Map<Double, List<String>> spectrumPeakToStructure = new HashMap<Double, List<String>>();
 		Vector<PeakMzAnno> spectrumPeakList = new Vector<PeakMzAnno>();
 		List<Spectrum> spectra = new ArrayList<Spectrum>();
 		
@@ -318,7 +318,7 @@ public class MzAnnotateReader {
 		        if(isSpectrumData && isPeakList && isPeak && isPeakMolRef)
 		        {
 		        	if(attribute.getName().getLocalPart().equals(PEAKMOLECULEREF))
-		        		spectrumPeakToStructure.put(Double.parseDouble(peakMZ), attribute.getValue());
+		        		spectrumPeakToStructure = Tools.addMolRefToMap(Double.parseDouble(peakMZ), attribute.getValue(), spectrumPeakToStructure);
 		        }
 		        
 		        
@@ -480,21 +480,27 @@ public class MzAnnotateReader {
 		
 		FragmentList fragList = new FragmentList();
 
+
 		//now read in the saved cml xml
 		for (String molString : moleculeListString) {
-			InputStream bais = new ByteArrayInputStream(molString.getBytes());
-			CMLReader reader = new CMLReader(bais);
-			IChemFile chemFile = new ChemFile();
-	        chemFile = (IChemFile) reader.read(chemFile);
-	        IAtomContainer container = ChemFileManipulator.getAllAtomContainers(chemFile).get(0);
-	        
-	        //TODO: properly find reactant
-	        if(container.getID().startsWith("m"))
-	        	fragList.addStructure(container);
-	        else
-		        //those molecules already have a id
-		        fragList.addFragment(container);
+			//if empty molstring or no molecules are given
+			if(molString != "" && !molString.equals("<molecule></molecule>"))
+			{
+				InputStream bais = new ByteArrayInputStream(molString.getBytes());
+				CMLReader reader = new CMLReader(bais);
+				IChemFile chemFile = new ChemFile();
+		        chemFile = (IChemFile) reader.read(chemFile);
+		        IAtomContainer container = ChemFileManipulator.getAllAtomContainers(chemFile).get(0);
+		        
+		        //TODO: properly find reactant
+		        if(container.getID().startsWith("m"))
+		        	fragList.addStructure(container);
+		        else
+			        //those molecules already have a id
+			        fragList.addFragment(container);
+			}
 		}
+		
 		
 		
 		//TODO: for now only one spectrum per file....completly rewrite the spectram data object and merge with mzML
@@ -504,7 +510,13 @@ public class MzAnnotateReader {
 		//now assign the links between the peaks and the fragments
 		for (Double peak : spectrumPeakToStructure.keySet()) {
 			try {
-				mzAnno.assignPeakToFragment(Tools.getPeak(specData, peak), spectrumPeakToStructure.get(peak));
+				if(spectrumPeakToStructure.get(peak) != null)
+				{
+					for (String ref : spectrumPeakToStructure.get(peak)) {
+						mzAnno.assignPeakToFragment(Tools.getPeak(specData, peak), ref);
+					}
+				}
+				
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
