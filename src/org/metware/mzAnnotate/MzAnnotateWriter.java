@@ -117,14 +117,14 @@ public class MzAnnotateWriter {
 	
 	
 	/**
-	 * Pretty format.
+	 * Pretty format of xml file.
 	 * 
 	 * @param input the input
 	 * @param indent the indent
 	 * 
 	 * @return the string
 	 */
-	private static String prettyFormat(String input, int indent) {
+	public static String prettyFormat(String input, int indent) {
 	    try {
 	        Source xmlInput = new StreamSource(new StringReader(input));
 	        StringWriter stringWriter = new StringWriter();

@@ -82,6 +82,32 @@ public class SpectrumData {
 	
 	
 	/**
+	 * Reads in a MassBank flat file from a given location.
+	 * 
+	 * @param spectrum the spectrum
+	 * @param MassBankAccession the mass bank accession
+	 */
+	public SpectrumData(Spectrum spectrum)
+	{
+		Vector<Spectrum> vec = new Vector<Spectrum>();
+		vec.add(spectrum);
+		this.spectra = vec;
+		this.peaks = spectra.get(0).getPeaks(); //just one spectra for now
+		this.exactMass = spectra.get(0).getExactMass();
+		this.mode = spectra.get(0).getMode();
+		this.collisionEnergy = spectra.get(0).getCollisionEnergy();
+		this.InchI = spectra.get(0).getInchi();
+		this.CID = spectra.get(0).getCID();
+		this.KEGG = spectra.get(0).getKEGG();
+		this.nameTrivial = spectra.get(0).getTrivialName();
+		this.MassBankAccession = "";
+		this.filename = "";
+		this.setFormula(spectra.get(0).getFormula());
+		this.assignedPeakToStructure = new HashMap<Double, List<Fragment>>();
+	}
+	
+	
+	/**
 	 * Creates a new Spectrum with a given peaklist...used for the web interface
 	 * Ignores inchi, keggID, CID (-1), trivial name, collision energy (set to -1)
 	 * 

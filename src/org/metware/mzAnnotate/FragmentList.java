@@ -35,7 +35,11 @@ public class FragmentList {
 	public String addFragment(IAtomContainer mol)
 	{
 		IMolecularFormula molFormula = MolecularFormulaManipulator.getMolecularFormula(mol);
-		String id = "f" + idCount;
+		String id = "";
+		if(mol.getID() == null && mol.getID() == "")
+			id = "f" + idCount;
+		else
+			id = mol.getID();
 		
 		
 		int atomStart = molNumbers.getAtomCount();
@@ -78,7 +82,11 @@ public class FragmentList {
 	public String addStructure(IAtomContainer mol)
 	{
 		IMolecularFormula molFormula = MolecularFormulaManipulator.getMolecularFormula(mol);
-		String id = "m" + idCount;
+		String id = "";
+		if(mol.getID() == null && mol.getID() == "")
+			id = "f" + idCount;
+		else
+			id = mol.getID();
 		
 		int atomStart = molNumbers.getAtomCount();
 		int bondStart = molNumbers.getAtomCount();

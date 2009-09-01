@@ -32,6 +32,27 @@ public class Spectrum  implements java.io.Serializable, Comparable<Spectrum> {
 		this.setFormula(formula);
 	}
 	
+	/**
+	 * Instantiates a new spectrum with minimal information.
+	 * 
+	 * @param collisionEnergy the collision energy
+	 * @param peaks the peaks
+	 * @param exactMass the exact mass
+	 * @param mode the mode
+	 */
+	public Spectrum(int collisionEnergy, Vector<Peak> peaks, double exactMass, int mode){
+		this.collisionEnergy = collisionEnergy;
+		this.tic = 0.0;
+		this.peaks = peaks;
+		this.exactMass = exactMass;
+		this.mode = mode;
+		this.InchI = "";
+		this.CID = 0;
+		this.KEGG = "";
+		this.nameTrivial = "";
+		this.setFormula("");
+	}
+	
 	public Spectrum(int collisionEnergy, Vector<Peak> peaks, double exactMass, int mode, String InchI, int CID, String KEGG, String nameTrivial, String formula){
 		this(collisionEnergy, 0.0, peaks, exactMass, mode, InchI, CID, KEGG, nameTrivial, formula);
 	}	

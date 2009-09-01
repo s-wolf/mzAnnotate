@@ -43,6 +43,22 @@ public class Peak implements Comparable<Peak>, java.io.Serializable {
 		lowestEnergy = energy;
 		highestEnergy = energy;
 	}
+	
+	/**
+	 * Instantiates a new peak.
+	 * 
+	 * @param mass the mass
+	 * @param intensity the intensity
+	 * @param energy the energy
+	 */
+	public Peak(double mass, double intensity){
+		this.mass = mass;
+		this.intensity = intensity;
+		this.relIntensityDB = 0.0;
+		relIntensity = 0.0;		
+		lowestEnergy = 0;
+		highestEnergy = 0;
+	}
 
 	public double getMass(){
 		return mass;
