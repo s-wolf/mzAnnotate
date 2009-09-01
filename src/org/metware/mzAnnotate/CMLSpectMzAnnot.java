@@ -14,7 +14,7 @@ import org.xmlcml.cml.element.CMLPeakList;
 import org.xmlcml.cml.element.CMLScalar;
 import org.xmlcml.cml.element.CMLSpectrum;
 
-import de.ipbhalle.metfrag.massbankParser.Peak;
+import de.ipbhalle.metfrag.TEMP.PeakMzAnno;
 
 
 public class CMLSpectMzAnnot {
@@ -27,7 +27,7 @@ public class CMLSpectMzAnnot {
 	   * @exception  Exception     Database problems
 	   * @exception  CMLException  xml problems.
 	   */
-	  public CMLSpectrum getCmlSpect(SpectrumData spectrumMassbank, HashMap<Peak, List<String>> assignedFragments) {
+	  public CMLSpectrum getCmlSpect(SpectrumData spectrumMassbank, HashMap<PeakMzAnno, List<String>> assignedFragments) {
 	    
 	    CMLSpectrum spectrum = new CMLSpectrum();
 	    	    
@@ -85,10 +85,10 @@ public class CMLSpectMzAnnot {
 	    spectrum.setId("massbank:" + spectrumMassbank.getMassBankAccession());
 	    spectrum.setMoleculeRef("PubChem:" + spectrumMassbank.getCID());
 	    spectrum.setType("MS2");
-	    List<Peak> peaks = spectrumMassbank.getPeakList();
+	    List<PeakMzAnno> peaks = spectrumMassbank.getPeakList();
 	    
 	    Integer count = 0;
-	    for (Peak peak : peaks) {
+	    for (PeakMzAnno peak : peaks) {
 	    	CMLPeak cmlPeak = new CMLPeak();
 	    	cmlPeak.setXValue(peak.getMass());
 	    	cmlPeak.setXUnits("units:mz");

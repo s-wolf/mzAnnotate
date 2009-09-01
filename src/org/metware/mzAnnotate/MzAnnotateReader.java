@@ -25,11 +25,10 @@ import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IChemFile;
 import org.openscience.cdk.io.CMLReader;
-import org.openscience.cdk.nonotify.NNChemFile;
 import org.openscience.cdk.tools.manipulator.ChemFileManipulator;
 
-import de.ipbhalle.metfrag.massbankParser.Peak;
-import de.ipbhalle.metfrag.massbankParser.Spectrum;
+import de.ipbhalle.metfrag.TEMP.PeakMzAnno;
+import de.ipbhalle.metfrag.TEMP.Spectrum;
 
 
 public class MzAnnotateReader {
@@ -73,11 +72,50 @@ public class MzAnnotateReader {
 		
 	}
 	
-	public MzAnnotate readMzAnnotate(String file) throws XMLStreamException, FileNotFoundException, CDKException
+	/**
+	 * Read mzAnnotate from string.
+	 * 
+	 * @param mzAnnotateString the mz annotate string
+	 * 
+	 * @return the mz annotate
+	 * 
+	 * @throws FileNotFoundException the file not found exception
+	 * @throws XMLStreamException the XML stream exception
+	 * @throws CDKException the CDK exception
+	 */
+	public MzAnnotate readMzAnnotateFromString(String mzAnnotateString) throws FileNotFoundException, XMLStreamException, CDKException
+	{
+		InputStream in = new ByteArrayInputStream(mzAnnotateString.getBytes());
+		XMLInputFactory factory = XMLInputFactory.newInstance(); 
+		XMLEventReader parser = factory.createXMLEventReader( in ); 
+		MzAnnotate ret = readMzAnnot(parser);
+		return ret;
+	}
+	
+	
+	/**
+	 * Read mzAnnotate.
+	 * 
+	 * @param file the file
+	 * 
+	 * @return the mz annotate
+	 * 
+	 * @throws FileNotFoundException the file not found exception
+	 * @throws XMLStreamException the XML stream exception
+	 * @throws CDKException the CDK exception
+	 */
+	public MzAnnotate readMzAnnotate(String file) throws FileNotFoundException, XMLStreamException, CDKException
 	{
 		InputStream in = new FileInputStream(file); 
 		XMLInputFactory factory = XMLInputFactory.newInstance(); 
 		XMLEventReader parser = factory.createXMLEventReader( in ); 
+		MzAnnotate ret = readMzAnnot(parser);
+		return ret;
+	}
+	
+	private MzAnnotate readMzAnnot(XMLEventReader parser) throws XMLStreamException, FileNotFoundException, CDKException
+	{
+		
 		StringBuilder spacer = new StringBuilder(); 
 		
 		
@@ -89,7 +127,7 @@ public class MzAnnotateReader {
 		Double spectrumExactMass = 0.0;
 		Map<String, String> spectrumMetaDataMap = new HashMap<String, String>();
 		Map<Double, String> spectrumPeakToStructure = new HashMap<Double, String>();
-		Vector<Peak> spectrumPeakList = new Vector<Peak>();
+		Vector<PeakMzAnno> spectrumPeakList = new Vector<PeakMzAnno>();
 		List<Spectrum> spectra = new ArrayList<Spectrum>();
 		
 		Map<String, List<String>> reactionListReactantToProduct = new HashMap<String, List<String>>();
@@ -384,7 +422,7 @@ public class MzAnnotateReader {
 		      if(event.asEndElement().getName().getLocalPart().equals(PEAK) && isSpectrumData && isPeakList && isPeak)
 		      {
 		    	  //write peak data to vector
-		    	  Peak peak = new Peak(Double.parseDouble(peakMZ), Double.parseDouble(peakInt));
+		    	  PeakMzAnno peak = new PeakMzAnno(Double.parseDouble(peakMZ), Double.parseDouble(peakInt));
 		    	  spectrumPeakList.add(peak);
 		    	  isPeak = false;
 		      }

@@ -9,7 +9,7 @@ import java.util.regex.Pattern;
 
 import org.openscience.cdk.interfaces.IMolecularFormulaSet;
 
-import de.ipbhalle.metfrag.massbankParser.*;
+import de.ipbhalle.metfrag.TEMP.*;
 
 
 
@@ -20,7 +20,7 @@ import de.ipbhalle.metfrag.massbankParser.*;
 public class SpectrumData {
 	
 	private Vector<Spectrum> spectra;
-	private Vector<Peak> peaks;
+	private Vector<PeakMzAnno> peaks;
 	private double exactMass;
 	private int mode;
 	private int collisionEnergy;
@@ -139,14 +139,14 @@ public class SpectrumData {
 	 * 
 	 * @return the vector<Peak>
 	 */
-	private Vector<Peak> parsePeaks(String peakString)
+	private Vector<PeakMzAnno> parsePeaks(String peakString)
 	{
 		// Compile regular expression --> remove spaces in front of lines
         Pattern pattern = Pattern.compile("^[ \t]+");
         //replace all tabs with 1 space
         //Pattern patternTabs = Pattern.compile("[\t]+");
         
-		Vector<Peak> parsedPeaks = new Vector<Peak>();
+		Vector<PeakMzAnno> parsedPeaks = new Vector<PeakMzAnno>();
 		String[] lines = peakString.split("\\\n");
 		for (String line : lines) {
 	        // Replace all occurrences of pattern in input
@@ -160,10 +160,10 @@ public class SpectrumData {
 			String[] array = output.split(" ");
 			//no absolute intensity is given
 			if(array.length == 2)
-				parsedPeaks.add(new Peak(Double.parseDouble(array[0]), 0.0, Double.parseDouble(array[1]), collisionEnergy));
+				parsedPeaks.add(new PeakMzAnno(Double.parseDouble(array[0]), 0.0, Double.parseDouble(array[1]), collisionEnergy));
 			//rel intensity is given
 			else if(array.length == 3)
-				parsedPeaks.add(new Peak(Double.parseDouble(array[0]), Double.parseDouble(array[1]), Double.parseDouble(array[2]), collisionEnergy));
+				parsedPeaks.add(new PeakMzAnno(Double.parseDouble(array[0]), Double.parseDouble(array[1]), Double.parseDouble(array[2]), collisionEnergy));
 		}
 		return parsedPeaks;
 	}
@@ -176,7 +176,7 @@ public class SpectrumData {
 	 * @param peakList the peak list
 	 * 
 	 */
-	public void setPeakList(Vector<Peak> peakList)
+	public void setPeakList(Vector<PeakMzAnno> peakList)
 	{
 		spectra.get(0).setPeaks(peakList);
 		this.peaks = peakList;
@@ -273,7 +273,7 @@ public class SpectrumData {
 	 * 
 	 * @return the peaks
 	 */
-	public Vector<Peak> getPeakList()
+	public Vector<PeakMzAnno> getPeakList()
 	{
 		return this.peaks;
 	}

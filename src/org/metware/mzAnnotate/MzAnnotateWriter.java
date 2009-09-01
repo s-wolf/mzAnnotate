@@ -28,7 +28,7 @@ import org.xmlcml.cml.element.CMLReactionList;
 import com.sun.org.apache.xml.internal.serialize.OutputFormat;
 
 
-import de.ipbhalle.metfrag.massbankParser.Peak;
+import de.ipbhalle.metfrag.TEMP.PeakMzAnno;
 
 public class MzAnnotateWriter {
 	
@@ -155,7 +155,7 @@ public class MzAnnotateWriter {
 	private CMLCml getReactionList(MzAnnotate mzAnno, CMLCml cml)
 	{
 		HashMap<String, Fragment> fragList = mzAnno.getFragMap().getFragList();
-		HashMap<Peak, List<String>> assignedFrags = mzAnno.getAssignedFragments();
+		HashMap<PeakMzAnno, List<String>> assignedFrags = mzAnno.getAssignedFragments();
 		
 		CMLReactionList reactionList = new CMLReactionList();
 		CMLReaction reaction = new CMLReaction();

@@ -4,13 +4,13 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-import de.ipbhalle.metfrag.massbankParser.Peak;
+import de.ipbhalle.metfrag.TEMP.PeakMzAnno;
 
 public class MzAnnotate {
 	
 	private SpectrumData specData;
 	private FragmentList fragMap;
-	private HashMap<Peak, List<String>> assignedFragments;
+	private HashMap<PeakMzAnno, List<String>> assignedFragments;
 	private boolean isReactionGiven = false;
 	
 
@@ -36,7 +36,7 @@ public class MzAnnotate {
 	{
 		this.specData = spectData;
 		this.fragMap = fragMap;
-		this.assignedFragments = new HashMap<Peak, List<String>>();
+		this.assignedFragments = new HashMap<PeakMzAnno, List<String>>();
 	}
 	
 	/**
@@ -48,7 +48,7 @@ public class MzAnnotate {
 	 * 
 	 * @throws Exception the exception
 	 */
-	public void assignPeakToFragment(Peak peak, String fragID) throws Exception
+	public void assignPeakToFragment(PeakMzAnno peak, String fragID) throws Exception
 	{
 		this.setReactionGiven(true);
 		
@@ -115,7 +115,7 @@ public class MzAnnotate {
 	 * 
 	 * @return the assigned fragments
 	 */
-	public HashMap<Peak, List<String>> getAssignedFragments() {
+	public HashMap<PeakMzAnno, List<String>> getAssignedFragments() {
 		return assignedFragments;
 	}
 
@@ -124,7 +124,7 @@ public class MzAnnotate {
 	 * 
 	 * @param assignedFragments the assigned fragments
 	 */
-	public void setAssignedFragments(HashMap<Peak, List<String>> assignedFragments) {
+	public void setAssignedFragments(HashMap<PeakMzAnno, List<String>> assignedFragments) {
 		this.assignedFragments = assignedFragments;
 	}
 

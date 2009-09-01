@@ -9,7 +9,7 @@ import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IMolecularFormula;
 import org.openscience.cdk.tools.manipulator.MolecularFormulaManipulator;
 
-import de.ipbhalle.metfrag.massbankParser.Peak;
+import de.ipbhalle.metfrag.TEMP.PeakMzAnno;
 
 public class Tools {
 	
@@ -53,11 +53,11 @@ public class Tools {
 	 * 
 	 * @throws Exception the exception
 	 */
-	public static Peak getPeak(SpectrumData specData, double mz) throws Exception
+	public static PeakMzAnno getPeak(SpectrumData specData, double mz) throws Exception
 	{
-		Vector<Peak> peakList = new Vector<Peak>();
+		Vector<PeakMzAnno> peakList = new Vector<PeakMzAnno>();
 		peakList = specData.getPeakList();
-		for (Peak peak : peakList) {
+		for (PeakMzAnno peak : peakList) {
 			if(peak.getMass() == mz)
 				return peak;
 		}
