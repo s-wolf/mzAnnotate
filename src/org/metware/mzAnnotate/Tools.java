@@ -1,6 +1,9 @@
 package org.metware.mzAnnotate;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.Vector;
 
 import org.openscience.cdk.interfaces.IAtom;
@@ -101,5 +104,30 @@ public class Tools {
 		
 		return isGiven;
 	}
+	
+	/**
+	 * Adds a molecule ref to the map.
+	 * 
+	 * @param mz the mz
+	 * @param refToAdd the ref to add
+	 */
+    public static Map<Double, List<String>> addMolRefToMap(double mz, String refToAdd, Map<Double, List<String>> refMap)
+    {
+    	//add sum formula molecule comb. to map
+        if(refMap.containsKey(mz))
+        {
+        	List<String> tempList = refMap.get(mz);
+        	tempList.add(refToAdd);
+        	refMap.put(mz, tempList);
+        }
+        else
+        {
+        	List<String> temp = new ArrayList<String>();
+        	temp.add(refToAdd);
+        	refMap.put(mz, temp);
+        }
+        
+        return refMap;
+    }
 	
 }
