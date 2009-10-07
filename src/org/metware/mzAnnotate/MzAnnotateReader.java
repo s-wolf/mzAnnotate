@@ -503,7 +503,7 @@ public class MzAnnotateReader {
 		
 		
 		
-		//TODO: for now only one spectrum per file....completly rewrite the spectram data object and merge with mzML
+		//TODO: for now only one spectrum per file....completely rewrite the spectrum data object and merge with mzML
 		SpectrumData specData = new SpectrumData(spectra.get(0));
 		MzAnnotate mzAnno = new MzAnnotate(specData, fragList);
 		
