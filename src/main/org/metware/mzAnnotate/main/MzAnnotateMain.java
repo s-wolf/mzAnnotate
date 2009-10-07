@@ -73,7 +73,10 @@ public class MzAnnotateMain {
 		
 		MzAnnotateWriter writerTest = new MzAnnotateWriter();
 		CMLCml cml = writerTest.getMzAnnotate(mzAnno);
+		//cml output
 		System.out.println(cml.toXML());
+		//pretty output
+		System.out.println(writerTest.getMzannotateStringFormatted(mzAnno));
 	}
 }
 

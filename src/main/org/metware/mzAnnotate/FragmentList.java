@@ -36,7 +36,7 @@ public class FragmentList {
 	{
 		IMolecularFormula molFormula = MolecularFormulaManipulator.getMolecularFormula(mol);
 		String id = "";
-		if(mol.getID() == null && mol.getID() == "")
+		if(mol.getID() == null || mol.getID() == "")
 			id = "f" + idCount;
 		else
 			id = mol.getID();
@@ -83,7 +83,7 @@ public class FragmentList {
 	{
 		IMolecularFormula molFormula = MolecularFormulaManipulator.getMolecularFormula(mol);
 		String id = "";
-		if(mol.getID() == null && mol.getID() == "")
+		if(mol.getID() == null || mol.getID() == "")
 			id = "f" + idCount;
 		else
 			id = mol.getID();
