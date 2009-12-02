@@ -1,7 +1,9 @@
 CMLSPECT=../cml/ci600531a_Supplemental/schema.xsd
 SCHEMATRON=mzAnnot.schematron 
 
-EXAMPLES=sumformulareactionspectrum.cml reactionSchemeMoleculeSet.cml
+EXAMPLES=sumformulareactionspectrum.cml \
+         reactionSchemeMoleculeSet.cml \
+         psicvExample.cml
 
 all: lint validate
 
