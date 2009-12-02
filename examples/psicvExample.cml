@@ -6,7 +6,8 @@
    xsi:schemaLocation="
    http://www.xml-cml.org/schema schema.xsd 
    http://psidev.cvs.sourceforge.net/*checkout*/psidev/psi/psi-ms/mzML/controlledVocabulary/psi-ms.obo dict/psi-ms.xml
-   http://obo.cvs.sourceforge.net/*checkout*/obo/obo/ontology/phenotype/unit.obo dict/unit.xml">
+   http://obo.cvs.sourceforge.net/*checkout*/obo/obo/ontology/phenotype/unit.obo dict/unit.xml"
+     convention="mzAnnot">
 
 <metadataList convention="mzAnnot:PSI_MS">
   <metadata dictRef="psi:MS_1000569" title="SHA-1">1234567890123456</metadata>

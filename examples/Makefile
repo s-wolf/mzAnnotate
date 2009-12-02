@@ -1,4 +1,4 @@
-CMLSPECT=../cml/ci600531a_Supplemental/schema.xsd
+CMLSPECT=schema.xsd
 SCHEMATRON=mzAnnot.schematron 
 
 EXAMPLES=sumformulareactionspectrum.cml \
