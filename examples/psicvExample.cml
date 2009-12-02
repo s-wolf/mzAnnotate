@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<cml xmlns="http://www.xml-cml.org/schema"
+     cvRef:MS="http://psidev.cvs.sourceforge.net/*checkout*/psidev/psi/psi-ms/mzML/controlledVocabulary/psi-ms.obo dict/psims.xml"
+     cvRef:UO="http://obo.cvs.sourceforge.net/*checkout*/obo/obo/ontology/phenotype/unit.obo dict/unit.xml">
+
+<metadata dictRef="cvRef:MS" id="MS:1000569" name="SHA-1">1234567890123456</metadata>
+<metadata dictRef="cvRef:MS" id="MS:1000569" name="SHA-1" content="1234567890123456"/>
+<metadata dictRef="cvRef:MS" id="MS:1000130" name="positive scan"/>
+
+</cml>
