@@ -12,9 +12,9 @@ lint: $(EXAMPLES:%.cml=%.lint)
 validate: $(EXAMPLES:%.cml=%.linttron)
 
 %.lint: %.cml
-	@echo -n "Lint'ing against schema..."
+	@echo -n "Lint'ing against schema... "
 	@xmllint --noout --schema ${CMLSPECT} $<
 
 %.linttron: %.cml
-	@echo -n "Validating against schematron..."
+	@echo -n "Validating against schematron... "
 	@xmllint --noout --schematron ${SCHEMATRON} $<
