@@ -18,4 +18,9 @@
   <metadata dictRef="obounit:UO_0000266" title="electronvolt"/>
 </metadataList>
 
+<metadataList>
+  <metadata dictRef="psims:MS_1000045" title="collision energy" content="35"/>
+  <metadata dictRef="obounit:UO_0000266" title="electronvolt"/>
+</metadataList>
+
 </cml>
