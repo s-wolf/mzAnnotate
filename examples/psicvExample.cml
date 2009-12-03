@@ -2,17 +2,20 @@
 <cml xmlns="http://www.xml-cml.org/schema"
      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
      xmlns:psims="http://purl.org/obo/owl/MS#"
-     xmlns:unit="http://obo.cvs.sourceforge.net/*checkout*/obo/obo/ontology/phenotype/unit.obo"
-   xsi:schemaLocation="
-   http://www.xml-cml.org/schema schema.xsd 
-   http://purl.org/obo/owl/MS# dict/psi-ms.owl
-   http://obo.cvs.sourceforge.net/*checkout*/obo/obo/ontology/phenotype/unit.obo dict/unit.xml"
+     xmlns:obounit="http://purl.org/obo/owl/obounit#" 
+     xsi:schemaLocation="http://www.xml-cml.org/schema schema.xsd 
+			 http://purl.org/obo/owl/MS# dict/psi-ms.owl
+			 http://purl.org/obo/owl/obounit# dict/obounit.owl"
      convention="mzAnnot">
 
 <metadataList convention="mzAnnot:PSI_MS">
   <metadata dictRef="psims:MS_1000569" title="SHA-1">1234567890123456</metadata>
   <metadata dictRef="psims:MS_1000569" title="SHA-1" content="1234567890123456"/>
   <metadata dictRef="psims:MS_1000130" title="positive scan"/>
+</metadataList>
+
+<metadataList convention="mzAnnot:OBO_UNIT">
+  <metadata dictRef="obounit:UO_0000266" title="electronvolt"/>
 </metadataList>
 
 </cml>
