@@ -23,4 +23,26 @@
   <metadata dictRef="obounit:UO_0000266" title="electronvolt"/>
 </metadataList>
 
+<spectrum moleculeRef="" type="">
+
+  <metadataList convention="mzAnnot:PSI_MS">
+    <metadata dictRef="psims:MS_1000130" title="positive scan"/>
+  </metadataList>
+
+  <conditionList>
+
+    <scalar dictRef="psims:MS_1000045" title="collision energy" units="obounit:UO_0000266">
+      35
+    </scalar>
+
+    <scalar dictRef="psims:MS_1000130" title="positive scan"/>
+
+  </conditionList>
+
+  <substanceList/>
+  <peakList/>
+
+</spectrum>
+
 </cml>
+
