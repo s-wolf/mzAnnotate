@@ -5,7 +5,7 @@
      xmlns:unit="http://obo.cvs.sourceforge.net/*checkout*/obo/obo/ontology/phenotype/unit.obo"
    xsi:schemaLocation="
    http://www.xml-cml.org/schema schema.xsd 
-   http://psidev.cvs.sourceforge.net/*checkout*/psidev/psi/psi-ms/mzML/controlledVocabulary/psi-ms.obo dict/psi-ms.xml
+   http://purl.org/obo/owl/MS# dict/psi-ms.owl
    http://obo.cvs.sourceforge.net/*checkout*/obo/obo/ontology/phenotype/unit.obo dict/unit.xml"
      convention="mzAnnot">
 
