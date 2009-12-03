@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <cml xmlns="http://www.xml-cml.org/schema"
      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-     xmlns:psims="http://psidev.cvs.sourceforge.net/*checkout*/psidev/psi/psi-ms/mzML/controlledVocabulary/psi-ms.obo"
+     xmlns:psims="http://purl.org/obo/owl/MS#"
      xmlns:unit="http://obo.cvs.sourceforge.net/*checkout*/obo/obo/ontology/phenotype/unit.obo"
    xsi:schemaLocation="
    http://www.xml-cml.org/schema schema.xsd 
@@ -10,9 +10,9 @@
      convention="mzAnnot">
 
 <metadataList convention="mzAnnot:PSI_MS">
-  <metadata dictRef="psi:MS_1000569" title="SHA-1">1234567890123456</metadata>
-  <metadata dictRef="psi:MS_1000569" title="SHA-1" content="1234567890123456"/>
-  <metadata dictRef="psi:MS_1000130" title="positive scan"/>
+  <metadata dictRef="psims:MS_1000569" title="SHA-1">1234567890123456</metadata>
+  <metadata dictRef="psims:MS_1000569" title="SHA-1" content="1234567890123456"/>
+  <metadata dictRef="psims:MS_1000130" title="positive scan"/>
 </metadataList>
 
 </cml>
